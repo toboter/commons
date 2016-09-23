@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) : 'media.babylon-online.org' %></title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%= link_to 'media.babylon-online.org', root_url, class: "navbar-brand" %>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-left">
+            <%= content_tag :p, fa_icon('user', text: "Signed in as #{current_user.try(:name)}"), class: 'navbar-text' if current_user %>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><%= link_to 'API', api_path %></li>
+            <li><%= link_to 'Help', help_path %></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid" style="margin-top: 60px;">
+      <div class="row">
+   
+        <div class="col-md-12">
+          <%= content_tag :div, class: "page-header" do %>
+            <h1 class="">
+              <%= yield(:title) if content_for?(:title) %>
+              <div class="pull-right">
+                <%= yield(:buttons) if content_for?(:buttons) %>
+              </div>
+            </h1>
+          <% end if content_for?(:buttons) || content_for?(:title) %>
+          
+          <%= content_tag :div, class: 'row' do %>
+            <div class="col-md-12">
+            <%= content_tag :div, class: "alert alert-info" do %>
+              <%= notice %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            <% end if notice %>
+            <%= content_tag :div, class: "alert alert-danger" do %>
+              <%= alert %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            <% end if alert %>
+            </div>
+          <% end if alert || notice %>
+          
+          <%= yield %>
+          
+        </div>
+      </div>
+    </div>
+    
+    <footer class="footer">
+      <nav class="navbar navbar-default navbar-static-bottom">
+        <div class="container-fluid">  
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-bottom" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <%= link_to '@babili.babylon-online.org', "#{Rails.application.secrets.provider_site}", class: "navbar-brand" %>
+          </div>
+          
+          <div id="navbar-bottom" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav"> 
+              <li><%= link_to "About", "#{Rails.application.secrets.provider_site}/about" %></li>
+              <li><%= link_to "Imprint", "#{Rails.application.secrets.provider_site}/imprint" %></li>
+              <li><%= link_to 'Contact', "#{Rails.application.secrets.provider_site}/contact?origin=media" %></li>
+            </ul>
+            
+            <ul class="nav navbar-nav navbar-right">
+              <% if current_user %>        
+                <li><%= link_to fa_icon('sign-out', text: "Sign Out"), signout_path %></li>
+              <% else %>
+                <li><%= link_to fa_icon('sign-in', text: "Sign in through Bab-ili"), "/auth/babili" %></li>
+              <% end %>
+            </ul>            
+          </div>        
+        </div>
+      </nav>
+    </footer>
+  </body>
+</html>

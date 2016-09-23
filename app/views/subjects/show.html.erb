@@ -1,0 +1,28 @@
+<p>
+  <strong>Name:</strong>
+  <%= @subject.name %>
+</p>
+
+<p>
+  <strong>Attachment:</strong>
+  <%= @subject.attachment %>
+</p>
+
+<p>
+  <strong>Content type:</strong>
+  <%= @subject.content_type %>
+</p>
+
+<p>
+  <strong>Copyright owner:</strong>
+  <%= @subject.copyright_owner %>
+</p>
+
+<p>
+  <strong>Copyright license:</strong>
+  <%= @subject.copyright_license %>
+</p>
+
+<%= link_to 'Edit', edit_subject_path(@subject) %> |
+<%= link_to 'Back', subjects_path %> | 
+<%= link_to 'Destroy', @subject, method: :delete, data: { confirm: 'Are you sure?' } %>
