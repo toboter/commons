@@ -24,6 +24,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-left">
             <%= content_tag :p, fa_icon('user', text: "Signed in as #{current_user.try(:name)}"), class: 'navbar-text' if current_user %>
+            <li><%= link_to 'All Subjects', subjects_path %></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><%= link_to 'API', api_path %></li>

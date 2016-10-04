@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   get '/signout', to: 'sessions#destroy', as: 'signout'
   get 'search', to: 'subjects#index'
   
-  resources :subjects
+  resources :subjects do
+    post 'upload', on: :collection
+  end
+
   #namespace :api, defaults: {format: 'json'} do
   #  scope module: :v1 do
   #    resources :citations, only: [:index, :show] do

@@ -4,7 +4,7 @@ class SubjectsController < ApplicationController
   # GET /subjects
   # GET /subjects.json
   def index
-    @subjects = Subject.search(params[:q])
+    @subjects = Subject.search(params[:q]).order(created_at: :desc)
   end
 
   # GET /subjects/1
@@ -16,20 +16,35 @@ class SubjectsController < ApplicationController
   def new
     @subject = Subject.new
   end
-
+  
   # GET /subjects/1/edit
   def edit
+  end
+  
+  # POST /subjects/upload
+  def upload
+    @subject = Subject.new
+    @subject.attachment = params[:attachment].first
+    @subject.copyright_owner = current_user.name if @subject.copyright_owner.blank?
+    @subject.copyright_license = 'CC BY-NC-SA 4.0' if @subject.copyright_license.blank?
+    if @subject.save 
+      render :show, status: :ok, location: @subject
+    else
+      render :nothing, status: :unprocessable_entity
+    end
   end
 
   # POST /subjects
   # POST /subjects.json
   def create
     @subject = Subject.new(subject_params)
-
+    @subject.copyright_owner = current_user.name if @subject.copyright_owner.blank?
+    @subject.copyright_license = 'CC BY-NC-SA 4.0' if @subject.copyright_license.blank?
     respond_to do |format|
       if @subject.save
         format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
-        format.json { render :show, status: :created, location: @subject }
+        #format.json { render :show, status: :ok, location: @subject }
+        #format.js
       else
         format.html { render :new }
         format.json { render json: @subject.errors, status: :unprocessable_entity }
@@ -69,6 +84,6 @@ class SubjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_params
-      params.require(:subject).permit(:name, :attachment, :content_type, :copyright_owner, :copyright_license)
+      params.require(:subject).permit(:name, :attachment, :attachment_cache, :content_type, :copyright_owner, :copyright_license)
     end
 end

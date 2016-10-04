@@ -30,6 +30,9 @@ class SubjectUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
+  version :thumb do
+    process resize_to_fill: [200, 200]
+  end
   version :index_thumb do
     process resize_to_fill: [650, 400]
   end

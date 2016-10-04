@@ -3,10 +3,11 @@
   <%= f.hidden_field :attachment_cache %>
 
   <div class="form-inputs">
-    <%= f.input :name %>
-    <%= image_tag(@subject.attachment_url) if @subject.attachment? %>
+
+    <%= image_tag(@subject.attachment.thumb.url) if @subject.attachment? %>
     <%= f.input :attachment, as: :file %>
-    <%= f.input :content_type %>
+    <%= f.input :name %>
+    
     <%= f.input :copyright_owner %>
     <%= f.input :copyright_license %>
   </div>

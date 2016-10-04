@@ -5,31 +5,28 @@
   <div class="col-md-4" style="margin:10px 0;">
     <%= content_tag :div, class: 'pull-right' do %>
       <%= link_to 'Single file', new_subject_path, class: 'btn btn-default' %>
-      <%= link_to 'Multiple files', new_subject_path, class: 'btn btn-default' %>
     <% end %>
   </div>
+
+
+  <div class="col-md-12" style="margin: 30px 0;">
+    <%= form_tag(upload_subjects_path, multipart: true) do %>
+      <%= file_field_tag :attachment,
+        multiple: true,
+        id: 'multiple_new_subjects' %>
+    <% end %>
+  </div>
+    
+
 </div>
 
 <section class="no-padding" id="explore" style="margin-bottom: 80px;">
   <div class="container-fluid">
-    <div class="row no-gutter">
-      <% @subjects.each do |subject| %>
-        <div class="col-lg-3 col-sm-4">
-          <%= link_to subject, class: "portfolio-box", target: :blank do %>
-		        <%= image_tag subject.attachment.index_thumb.url, class: "img-responsive" %>
-            <div class="portfolio-box-caption">
-              <div class="portfolio-box-caption-content">
-                <div class="project-category text-faded">
-                  <%= subject.name %>
-                </div>
-                <div class="project-name">
-                
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      <% end %>
+    <div class="row no-gutter" id="uploads">
+
+    </div>
+    <div class="row no-gutter" id="subjects">
+      <%= render @subjects %>
     </div>
   </div>
 </section>  
