@@ -20,3 +20,11 @@
 //= require turbolinks
 //= require turbolinks-compatibility
 //= require_tree .
+
+$(document).ready(function() {
+  $("#tag_names").select2({
+    tags: true,
+    tokenSeparators: [','],
+    theme: "bootstrap"
+  });
+});

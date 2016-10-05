@@ -8,6 +8,8 @@ class SubjectUploader < CarrierWave::Uploader::Base
   storage :file
   # storage :fog
 
+  before :cache, :save_original_filename
+
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
@@ -30,23 +32,34 @@ class SubjectUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  version :thumb do
+  version :thumb, :if => :is_image? do
     process resize_to_fill: [200, 200]
   end
-  version :index_thumb do
+  version :index_thumb, :if => :is_image? do
     process resize_to_fill: [650, 400]
   end
-
+  
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   # def extension_whitelist
   #   %w(jpg jpeg gif png)
   # end
 
-  # Override the filename of the uploaded files:
-  # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
+  def is_image? file
+    file.content_type.include? 'image'
+  end
 
+  def save_original_filename(file)
+    model.attachment_original_filename ||= file.original_filename if file.respond_to?(:original_filename)
+  end
+    
+  def filename
+     "#{secure_token}.#{file.extension}" if original_filename.present?
+  end
+
+  protected
+  def secure_token(length=16)
+    var = :"@#{mounted_as}_secure_token"
+    model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.hex(length/2))
+  end
 end

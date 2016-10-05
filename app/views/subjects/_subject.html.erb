@@ -1,13 +1,15 @@
 <div class="col-lg-3 col-sm-4" id="image-<%= subject.id %>">
-  <%= link_to subject, class: "portfolio-box" do %>
+  <%= content_tag :div, class: "portfolio-box" do %>
     <%= image_tag subject.attachment.index_thumb.url, class: "img-responsive" %>
     <div class="portfolio-box-caption">
+      <%= link_to fa_icon('edit'), edit_subject_path(subject), class: 'edit' %>
+      <%= link_to fa_icon('remove'), subject, method: :delete, class: 'remove' %>
       <div class="portfolio-box-caption-content">
         <div class="project-category text-faded">
-          <%= subject.name %>
+          <%= link_to subject.name, subject, class: 'show' %>
         </div>
-        <div class="project-name">
-                
+        <div class="project-name">   
+           <%= subject.taggings.map{|c| content_tag :span, link_to(c.tag.name, subjects_path(q: "tag:#{c.tag.name}"), style: 'color: white;'), class: 'label label-default'}.join(' ').html_safe %>
         </div>
       </div>
     </div>

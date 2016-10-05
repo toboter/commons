@@ -5,6 +5,8 @@ class SubjectsController < ApplicationController
   # GET /subjects.json
   def index
     @subjects = Subject.search(params[:q]).order(created_at: :desc)
+    @image_subjects = @subjects.where('content_type LIKE ?', '%image%')
+    @other_subjects = @subjects.where('content_type NOT LIKE ?', '%image%')
   end
 
   # GET /subjects/1
@@ -79,11 +81,11 @@ class SubjectsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_subject
-      @subject = Subject.find(params[:id])
+      @subject = Subject.friendly.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_params
-      params.require(:subject).permit(:name, :attachment, :attachment_cache, :content_type, :copyright_owner, :copyright_license)
+      params.require(:subject).permit(:name, :attachment, :attachment_cache, :content_type, :copyright_owner, :copyright_license,  :tag_list => [])
     end
 end

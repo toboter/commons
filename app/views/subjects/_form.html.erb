@@ -4,9 +4,12 @@
 
   <div class="form-inputs">
 
-    <%= image_tag(@subject.attachment.thumb.url) if @subject.attachment? %>
+    <%= image_tag(@subject.attachment.thumb.url) if @subject.attachment? && @subject.content_type.include?('image') %>
     <%= f.input :attachment, as: :file %>
     <%= f.input :name %>
+    <%= f.input :tag_list, collection: Tag.order(name: :asc), label_method: :name, 
+          value_method: :name, selected: @subject.tags.map(&:name), 
+          input_html: {multiple: true, id: 'tag_names'} %>
     
     <%= f.input :copyright_owner %>
     <%= f.input :copyright_license %>

@@ -1,28 +1,56 @@
-<p>
-  <strong>Name:</strong>
-  <%= @subject.name %>
-</p>
+<% title @subject.name %>
 
-<p>
-  <strong>Attachment:</strong>
-  <%= @subject.attachment %>
-</p>
+<% content_for(:buttons) do %>
+  <%= link_to fa_icon('edit', text: 'Edit'), edit_subject_path(@subject), class: 'btn btn-default' %>
+  <%= link_to fa_icon('remove', text: 'Delete'), @subject, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
+<% end if current_user %>
 
-<p>
-  <strong>Content type:</strong>
-  <%= @subject.content_type %>
-</p>
+<div class="row">
+  <div class="col-md-8">
+    <%= image_tag @subject.attachment.url, class: 'img-responsive' if @subject.content_type.include?('image') %>
 
-<p>
-  <strong>Copyright owner:</strong>
-  <%= @subject.copyright_owner %>
-</p>
+  </div>
+  
+  <div class="col-md-4">
+    <p>
+      <strong>Name:</strong>
+      <%= @subject.name %>
+    </p>
+    
+    <p>
+      <strong>Tags:</strong>
+      <%= @subject.tags.map{|c| content_tag :span, link_to(c.name, subjects_path(q: "tag:#{c.name}"), style: 'color: white;'), class: 'label label-default'}.join(' ').html_safe %>
+    </p>
+    
+    <p>
+      <strong>Attachment:</strong>
+      <%= @subject.attachment %>
+    </p>
+    
+    <p>
+      <strong>Content type:</strong>
+      <%= @subject.content_type %>
+    </p>
 
-<p>
-  <strong>Copyright license:</strong>
-  <%= @subject.copyright_license %>
-</p>
-
-<%= link_to 'Edit', edit_subject_path(@subject) %> |
-<%= link_to 'Back', subjects_path %> | 
-<%= link_to 'Destroy', @subject, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <p>
+      <strong>Size:</strong>
+      <%= number_to_human_size @subject.attachment_size %>
+    </p>
+    
+    <p>
+      <strong>Original filename:</strong>
+      <%= @subject.attachment_original_filename %>
+    </p> 
+       
+    <p>
+      <strong>Copyright owner:</strong>
+      <%= @subject.copyright_owner %>
+    </p>
+    
+    <p>
+      <strong>Copyright license:</strong>
+      <%= @subject.copyright_license %>
+    </p>
+    
+  </div>
+</div>

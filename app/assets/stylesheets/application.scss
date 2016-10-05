@@ -96,6 +96,29 @@ body {
 .portfolio-box:focus {
   outline: none;
 }
+
+.portfolio-box-caption a {
+  color: white;
+}
+
+.portfolio-box-caption a:hover {
+  color: #e8e8e8;
+}
+
+.portfolio-box-caption a.edit {
+  float: left;
+  margin: 7px;
+}
+
+.portfolio-box-caption a.remove {
+  float: right;
+  margin: 7px;
+}
+
+.portfolio-box-caption a.show {
+  text-decoration: none;
+}
+
 @media (min-width: 768px) {
   .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category {
     font-size: 16px;

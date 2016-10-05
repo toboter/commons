@@ -4,31 +4,51 @@
   </div>
   <div class="col-md-4" style="margin:10px 0;">
     <%= content_tag :div, class: 'pull-right' do %>
-      <%= link_to 'Single file', new_subject_path, class: 'btn btn-default' %>
+      <%= link_to 'Upload', new_subject_path, class: 'btn btn-default' %>
     <% end %>
   </div>
-
-
-  <div class="col-md-12" style="margin: 30px 0;">
-    <%= form_tag(upload_subjects_path, multipart: true) do %>
-      <%= file_field_tag :attachment,
-        multiple: true,
-        id: 'multiple_new_subjects' %>
-    <% end %>
-  </div>
-    
 
 </div>
 
-<section class="no-padding" id="explore" style="margin-bottom: 80px;">
-  <div class="container-fluid">
-    <div class="row no-gutter" id="uploads">
-
+<div class="row">
+  <section class="no-padding" id="explore">
+    <div class="container-fluid">
+    
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#image_subjects" aria-controls="image_subjects" role="tab" data-toggle="tab">Images <span class="badge"><%= @image_subjects.count %></span></a></li>
+        <li role="presentation"><a href="#other_subjects" aria-controls="other_subjects" role="tab" data-toggle="tab">Files <span class="badge"><%= @other_subjects.count %></span></a></li>
+      </ul>
+      <div class="tab-content" style="padding-top: 10px;">
+        <div role="tabpanel" class="row no-gutter tab-pane active" id="image_subjects" style="padding: 0 15px 0 15px;">
+          <%= render @image_subjects %>
+        </div>
+        
+        <div role="tabpanel" class="tab-pane" id="other_subjects">
+          <table class="table table-striped">
+            <tbody>
+              <% for s in @other_subjects do %>
+                <tr>
+                  <td><span class=""><%= s.attachment_original_filename.split('.').last if s.attachment_original_filename %></span></td>
+                  <td>
+                    <%= link_to s.name, s %><br>
+                    <small>
+                      <%= number_to_human_size s.attachment_size %>,
+                      <%= s.taggings.map{|c| content_tag :span, link_to(c.tag.name, subjects_path(q: "tag:#{c.tag.name}"), style: ''), class: ''}.join(' ').html_safe %>
+                    </small>
+                  </td>
+                  <td>
+                    <span class="pull-right">
+                      <%= link_to fa_icon('edit', text: 'edit'), edit_subject_path(s), class: 'btn btn-sm btn-default' %>
+                      <%= link_to fa_icon('remove', text: 'delete'), s, method: :delete, class: 'btn btn-sm btn-default' %>
+                    </span>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>   
+      </div>
+      
     </div>
-    <div class="row no-gutter" id="subjects">
-      <%= render @subjects %>
-    </div>
-  </div>
-</section>  
-
-
+  </section>
+</div>
