@@ -36,7 +36,12 @@
       <strong>Size:</strong>
       <%= number_to_human_size @subject.attachment_size %>
     </p>
-    
+
+    <p>
+      <strong>Dimensions:</strong>
+      <%= @subject.width %> x <%= @subject.height %>
+    </p>
+        
     <p>
       <strong>Original filename:</strong>
       <%= @subject.attachment_original_filename %>

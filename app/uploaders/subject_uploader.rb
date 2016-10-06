@@ -9,7 +9,9 @@ class SubjectUploader < CarrierWave::Uploader::Base
   # storage :fog
 
   before :cache, :save_original_filename
-
+  process :store_dimensions, :if => :is_image?
+  
+  
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
@@ -62,4 +64,13 @@ class SubjectUploader < CarrierWave::Uploader::Base
     var = :"@#{mounted_as}_secure_token"
     model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.hex(length/2))
   end
+  
+  private
+
+  def store_dimensions
+    if file && model
+      model.width, model.height = ::MiniMagick::Image.open(file.file)[:dimensions]
+    end
+  end
+  
 end

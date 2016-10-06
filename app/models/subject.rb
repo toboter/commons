@@ -31,6 +31,10 @@ class Subject < ApplicationRecord
   def obfuscated_id
     SecureRandom.hex(10) # File.basename(attachment.filename, '.*').titleize if attachment.present?
   end
+  
+  def dimensions
+    width && height ? "#{width} x #{height}" : nil
+  end
 
   private
 

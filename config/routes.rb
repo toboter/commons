@@ -8,15 +8,15 @@ Rails.application.routes.draw do
     post 'upload', on: :collection
   end
 
-  #namespace :api, defaults: {format: 'json'} do
-  #  scope module: :v1 do
-  #    resources :citations, only: [:index, :show] do
-  #      collection do
-  #        get 'search'
-  #      end 
-  #    end  
-  #  end
-  #end
+  namespace :api, defaults: {format: 'json'} do
+    scope module: :v1 do
+      resources :media, only: [:index, :show] do
+        collection do
+          get 'search'
+        end 
+      end  
+    end
+  end
   
   get '/api', to: 'home#api'
   get '/help', to: 'home#help'

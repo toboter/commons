@@ -28,7 +28,7 @@
             <tbody>
               <% for s in @other_subjects do %>
                 <tr>
-                  <td><span class=""><%= s.attachment_original_filename.split('.').last if s.attachment_original_filename %></span></td>
+                  <td><span class="">.<%= s.attachment_original_filename.split('.').last if s.attachment_original_filename %></span></td>
                   <td>
                     <%= link_to s.name, s %><br>
                     <small>
