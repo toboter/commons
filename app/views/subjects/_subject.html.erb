@@ -2,17 +2,17 @@
   <%= content_tag :div, class: "portfolio-box" do %>
     <%= image_tag subject.attachment.index_thumb.url, class: "img-responsive" %>
     <div class="portfolio-box-caption">
-      <%= link_to fa_icon('edit'), edit_subject_path(subject), class: 'edit' %>
-      <%= link_to fa_icon('remove'), subject, method: :delete, class: 'remove' %>
+      <%= link_to fa_icon('edit'), edit_subject_path(subject), class: 'edit' if current_user %>
+      <%= link_to fa_icon('remove'), subject, method: :delete, class: 'remove' if current_user %>
       <div class="portfolio-box-caption-content">
         <div class="project-category text-faded">
-          <%= link_to subject.name, subject, class: 'show' %>
+          <%= subject.name %>
         </div>
         <div class="project-name">   
           <%= subject.taggings.map{|c| content_tag :span, link_to(c.tag.name, subjects_path(q: "tag:#{c.tag.name}"), style: 'color: white;'), class: 'label label-default'}.join(' ').html_safe %>
         </div>
       </div>
-      <%= link_to fa_icon('eye'), subject, class: 'show hidden' %>
+      <%= link_to fa_icon('eye'), subject, class: 'show' %>
     </div>
   <% end %>
 </div>

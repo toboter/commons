@@ -4,10 +4,10 @@ class Subject < ApplicationRecord
   friendly_id :obfuscated_id, use: :slugged
   mount_uploader :attachment, SubjectUploader
   
-  before_validation :set_default_name
+  before_validation :set_default_name, on: :create
   before_validation :update_subject_attributes, if: :attachment_changed?
   
-  validates :name, :attachment, :content_type, presence: true
+  validates :attachment, :content_type, presence: true
 
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
