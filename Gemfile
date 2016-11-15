@@ -58,6 +58,7 @@ gem 'will_paginate-bootstrap'
 gem 'omniauth-oauth2'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'search_cop'        # https://github.com/mrkamel/search_cop
+gem 'acts-as-taggable-on', '~> 4.0'
 
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem "mini_magick"

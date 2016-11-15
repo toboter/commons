@@ -1,31 +1,19 @@
 class Subject < ApplicationRecord
-  include SearchCop
   extend FriendlyId
   friendly_id :obfuscated_id, use: :slugged
+  acts_as_taggable
   mount_uploader :attachment, SubjectUploader
-  
+
+  self.inheritance_column = :_type_disabled
+
   before_validation :set_default_name, on: :create
+  before_validation :set_type
   before_validation :update_subject_attributes, if: :attachment_changed?
   
-  validates :attachment, :content_type, presence: true
-
-  has_many :taggings, dependent: :destroy
-  has_many :tags, through: :taggings
-
-  search_scope :search do
-    attributes :name, :content_type
-    #attributes :creator => ["creators.lname", "creators.fname"]
-    attributes :tag => "tags.name"
-  end
-
-  def tag_list
-    tags.map(&:name).join(", ")
-  end
+  validates :attachment, :content_type, :type, presence: true
   
-  def tag_list=(names)
-    self.tags = names.reject { |c| c.empty? }.split(",").flatten.map do |n|
-      Tag.where(name: n).first_or_create!
-    end
+  def self.types
+    %w(Image Audio Video Application)
   end
 
   def obfuscated_id
@@ -36,10 +24,23 @@ class Subject < ApplicationRecord
     width && height ? "#{width} x #{height}" : nil
   end
 
+  def self.filter_by(q)
+    if q.present?
+      tagged_with(q)
+    else
+      unscoped
+    end
+  end
+
   private
 
   def set_default_name
     self.name = attachment_original_filename.split('.').first.titleize if attachment.present? && name.blank?
+  end
+
+  def set_type
+    type = attachment.content_type.split("/").first.classify
+    self.type = type if Subject.types.include?(type)
   end
 
   def update_subject_attributes

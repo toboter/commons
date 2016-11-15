@@ -16,12 +16,12 @@
     </p>
     <p>
       <strong>Description:</strong>
-
+      <%= @subject.description %>
     </p>
     
     <p>
       <strong>Tags:</strong>
-      <%= @subject.tags.map{|c| content_tag :span, link_to(c.name, subjects_path(q: "tag:#{c.name}"), style: 'color: white;'), class: 'label label-default'}.join(' ').html_safe %>
+      <%= @subject.tags.map{|c| content_tag :span, link_to(c.name, subjects_path(q: "#{c.name}"), style: 'color: white;'), class: 'label label-default'}.join(' ').html_safe %>
     </p>
     
     <p>

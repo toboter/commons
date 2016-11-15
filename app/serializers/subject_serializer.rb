@@ -11,7 +11,7 @@ class SubjectSerializer < ActiveModel::Serializer
 
 
   def type
-    "Medium"
+    object.type
   end
 
   def links

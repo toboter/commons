@@ -5,7 +5,7 @@ class SubjectsController < ApplicationController
   # GET /subjects
   # GET /subjects.json
   def index
-    @subjects = Subject.search(params[:q]).order(created_at: :desc)
+    @subjects = Subject.filter_by(params[:q]).order(created_at: :desc)
     @image_subjects = @subjects.where('content_type LIKE ?', '%image%')
     @other_subjects = @subjects.where('content_type NOT LIKE ?', '%image%')
   end
@@ -87,6 +87,6 @@ class SubjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_params
-      params.require(:subject).permit(:name, :attachment, :attachment_cache, :content_type, :copyright_owner, :copyright_license,  :tag_list => [])
+      params.require(:subject).permit(:name, :description, :attachment, :attachment_cache, :content_type, :copyright_owner, :copyright_license, :tag_list => [])
     end
 end

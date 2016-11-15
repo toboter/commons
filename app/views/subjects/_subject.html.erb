@@ -9,7 +9,7 @@
           <%= subject.name %>
         </div>
         <div class="project-name">   
-          <%= subject.taggings.map{|c| content_tag :span, link_to(c.tag.name, subjects_path(q: "tag:#{c.tag.name}"), style: 'color: white;'), class: 'label label-default'}.join(' ').html_safe %>
+          <%= subject.taggings.map{|c| content_tag :span, link_to(c.tag.name, subjects_path(q: "#{c.tag.name}"), style: 'color: white;'), class: 'label label-default'}.join(' ').html_safe %>
         </div>
       </div>
       <%= link_to fa_icon('eye'), subject, class: 'show' %>
