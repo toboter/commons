@@ -1,22 +1,16 @@
 <div class="row">
-  <div class="col-md-8" style="margin:10px 0;">
+  <div class="col-md-12" style="margin:10px 0;">
     <%= render "shared/search" %>
   </div>
-  <div class="col-md-4" style="margin:10px 0;">
-    <%= content_tag :div, class: 'pull-right' do %>
-      <%= link_to 'Upload', new_subject_path, class: 'btn btn-default' %>
-    <% end if current_user %>
-  </div>
-
 </div>
 
 <div class="row">
   <section class="no-padding" id="explore">
     <div class="container-fluid">
-    
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#image_subjects" aria-controls="image_subjects" role="tab" data-toggle="tab">Images <span class="badge"><%= @image_subjects.count %></span></a></li>
         <li role="presentation"><a href="#other_subjects" aria-controls="other_subjects" role="tab" data-toggle="tab">Files <span class="badge"><%= @other_subjects.count %></span></a></li>
+        <%= link_to 'Upload', new_subject_path, class: 'btn btn-default pull-right' if current_user %>
       </ul>
       <div class="tab-content" style="padding-top: 10px;">
         <div role="tabpanel" class="row no-gutter tab-pane active" id="image_subjects" style="padding: 0 15px 0 15px;">

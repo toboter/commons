@@ -26,7 +26,7 @@ class Subject < ApplicationRecord
 
   def self.filter_by(q)
     if q.present?
-      tagged_with(q)
+      q.include?('any') ? tagged_with(q, any: true, wild: true) : tagged_with(q)
     else
       unscoped
     end

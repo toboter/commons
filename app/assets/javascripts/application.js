@@ -27,4 +27,14 @@ $(document).ready(function() {
     tokenSeparators: [','],
     theme: "bootstrap"
   });
+  $("#tag_search").select2({
+    placeholder: "Select tags (separate by comma, search by enter)",
+    tokenSeparators: [','],
+    theme: "bootstrap"
+  });
+  $('.select2-selection').on('keyup', function (e) {
+    if (e.keyCode === 13) {
+      $(this).closest('form').submit();
+    }
+  });
 });
