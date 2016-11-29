@@ -40,6 +40,15 @@ class SubjectUploader < CarrierWave::Uploader::Base
   version :index_thumb, :if => :is_image? do
     process resize_to_fill: [650, 400]
   end
+  version :large, :if => :is_image? do
+    process resize_to_fit: [1280, 1280]
+  end
+  version :normal, from_version: :large, :if => :is_image? do
+    process resize_to_fit: [640, 640]
+  end
+  version :small, from_version: :normal, :if => :is_image? do
+    process resize_to_fit: [320, 320]
+  end
   
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:

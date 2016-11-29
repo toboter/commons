@@ -9,6 +9,6 @@ class Api::V1::MediaController < ActionController::API
   end
   
   def search
-    render json: Subject.filter_by(params[:q]), each_serializer: SubjectSerializer
+    render json: Subject.filter_by(params[:q], params[:f]), each_serializer: SubjectSerializer
   end
 end

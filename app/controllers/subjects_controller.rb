@@ -5,7 +5,7 @@ class SubjectsController < ApplicationController
   # GET /subjects
   # GET /subjects.json
   def index
-    @subjects = Subject.filter_by(params[:q]).order(created_at: :desc)
+    @subjects = Subject.filter_by(params[:q], params[:f]).order(created_at: :desc)
     @image_subjects = @subjects.where('content_type LIKE ?', '%image%')
     @other_subjects = @subjects.where('content_type NOT LIKE ?', '%image%')
   end

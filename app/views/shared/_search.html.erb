@@ -5,4 +5,6 @@
     </span>
     <%= select_tag :q, options_for_select(ActsAsTaggableOn::Tag.order(name: :asc).pluck(:name), params[:q]), multiple: true, class: "form-control", id: 'tag_search' %>
   </div>
+  <%= check_box_tag :f, value = "match", checked = params[:f] %> exact match?
+  <%= link_to 'Reset filter', subjects_path %>
 <% end %>

@@ -24,9 +24,9 @@ class Subject < ApplicationRecord
     width && height ? "#{width} x #{height}" : nil
   end
 
-  def self.filter_by(q)
+  def self.filter_by(q, f='any')
     if q.present?
-      q.include?('any') ? tagged_with(q, any: true, wild: true) : tagged_with(q)
+      f ==  'match' ? tagged_with(q) : tagged_with(q, any: true, wild: true)
     else
       unscoped
     end

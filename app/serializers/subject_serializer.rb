@@ -35,6 +35,18 @@ class SubjectSerializer < ActiveModel::Serializer
       thumb_file: { 
         url: "#{Rails.application.secrets.host}#{object.attachment.thumb.url}",
         size: number_to_human_size(object.attachment.thumb.size)
+      },
+      normal_file: {
+        url: "#{Rails.application.secrets.host}#{object.attachment.normal.url}",
+        size: number_to_human_size(object.attachment.normal.size)
+      },
+      large_file: {
+        url: "#{Rails.application.secrets.host}#{object.attachment.large.url}",
+        size: number_to_human_size(object.attachment.large.size)
+      },
+      small_file: {
+        url: "#{Rails.application.secrets.host}#{object.attachment.small.url}",
+        size: number_to_human_size(object.attachment.small.size)
       }
     }
   end
