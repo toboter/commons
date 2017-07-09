@@ -53,9 +53,9 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
 
-  CarrierWave.configure do |c|
-    c.ignore_integrity_errors = false
-    c.ignore_processing_errors = false
-    c.ignore_download_errors = false
-  end
+  # CarrierWave.configure do |c|
+  #   c.ignore_integrity_errors = false
+  #   c.ignore_processing_errors = false
+  #   c.ignore_download_errors = false
+  # end
 end

@@ -1,6 +1,6 @@
 <div class="col-lg-3 col-sm-4" id="image-<%= subject.id %>">
   <%= content_tag :div, class: "portfolio-box" do %>
-    <%= image_tag subject.attachment.index_thumb.url, class: "img-responsive" %>
+    
     <div class="portfolio-box-caption">
       <%= link_to fa_icon('edit'), edit_subject_path(subject), class: 'edit' if current_user %>
       <%= link_to fa_icon('remove'), subject, method: :delete, class: 'remove' if current_user %>

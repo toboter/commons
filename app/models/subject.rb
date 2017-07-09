@@ -1,54 +1,68 @@
 class Subject < ApplicationRecord
   extend FriendlyId
-  friendly_id :obfuscated_id, use: :slugged
-  acts_as_taggable
-  mount_uploader :attachment, SubjectUploader
-
-  self.inheritance_column = :_type_disabled
+  include Enki
+  include Nabu
+  include SearchCop
+  # include SubjectUploader[:file]
 
   before_validation :set_default_name, on: :create
-  before_validation :set_type
-  before_validation :update_subject_attributes, if: :attachment_changed?
-  
-  validates :attachment, :content_type, :type, presence: true
-  
+  before_validation :set_type, if: :file_data_changed?
+
+  self.inheritance_column = :type
+  friendly_id :obfuscated_id, use: :slugged
+  acts_as_taggable
+
+  validates :type, :name, presence: true
+
   def self.types
-    %w(Image Audio Video Application)
+    %w(Image Audio Video Document Subject)
   end
+  
+  filterrific(
+    default_filter_params: { sorted_by: 'name_asc' },
+    available_filters: [
+      :sorted_by,
+      :search
+    ]
+  )
+
+  search_scope :search do
+    attributes :name, :type
+    attributes :tag => "tags.name" # verbunden mit AND suchen
+  end
+
+  scope :sorted_by, lambda { |sort_option|
+    direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
+    case sort_option.to_s
+    when /^name_/
+      order("LOWER(subjects.name) #{ direction }")
+    else
+      raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
+    end
+  }
+   
+  def self.options_for_sorted_by
+    [
+      ['Name (a-z)', 'name_asc'],
+      ['Name (z-a)', 'name_desc']
+    ]
+  end
+
 
   def obfuscated_id
     SecureRandom.hex(10) # File.basename(attachment.filename, '.*').titleize if attachment.present?
   end
-  
-  def dimensions
-    width && height ? "#{width} x #{height}" : nil
-  end
-
-  def self.filter_by(q, f='any')
-    if q.present?
-      f ==  'match' ? tagged_with(q) : tagged_with(q, any: true, wild: true)
-    else
-      unscoped
-    end
-  end
 
   private
 
-  def set_default_name
-    self.name = attachment_original_filename.split('.').first.titleize if attachment.present? && name.blank?
-  end
-
   def set_type
-    type = attachment.content_type.split("/").first.classify
+    type = file.mime_type.split("/").first.classify
     self.type = type if Subject.types.include?(type)
   end
 
-  def update_subject_attributes
-    if attachment.present? && attachment_changed?
-      self.content_type = attachment.content_type
-      self.attachment_size = attachment.size
-      # attachment_created_at
-      # self.attachment_original_filename = attachment.filename
-    end
-  end  
+  def set_default_name
+    self.name = file.original_filename
+  end
+
+ 
 end

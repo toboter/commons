@@ -1,48 +1,50 @@
+<% title "Subjects", false %>
+
 <div class="row">
   <div class="col-md-12" style="margin:10px 0;">
-    <%= render "shared/search" %>
+    <%= form_for_filterrific @filterrific do |f| %>
+      <div class="form-inline row">
+        <div class="form-group col-md-8 col-sm-8">
+          <div class="input-group" style="width:100%">
+            <span class="input-group-addon" style="width:38px;"><%= link_to fa_icon('search'), help_path(anchor: 'searching') %></span>
+            <%= f.search_field(:search, placeholder: "Search in all fields", class: 'filterrific-periodically-observed form-control', style: '') %>
+          </div>
+        </div>
+        <div class="form-group col-md-3 col-md-offset-1 col-sm-3 col-sm-offset-1">
+          <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by], {}, { class: 'form-control pull-right' }) %>
+        </div>
+      </div>
+    <% end %> <!-- filterrific form end -->
   </div>
 </div>
 
 <div class="row">
-  <section class="no-padding" id="explore">
-    <div class="container-fluid">
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#image_subjects" aria-controls="image_subjects" role="tab" data-toggle="tab">Images <span class="badge"><%= @image_subjects.count %></span></a></li>
-        <li role="presentation"><a href="#other_subjects" aria-controls="other_subjects" role="tab" data-toggle="tab">Files <span class="badge"><%= @other_subjects.count %></span></a></li>
-        <%= link_to 'Upload', new_subject_path, class: 'btn btn-default pull-right' if current_user %>
-      </ul>
-      <div class="tab-content" style="padding-top: 10px;">
-        <div role="tabpanel" class="row no-gutter tab-pane active" id="image_subjects" style="padding: 0 15px 0 15px;">
-          <%= render @image_subjects %>
-        </div>
-        
-        <div role="tabpanel" class="tab-pane" id="other_subjects">
-          <table class="table table-striped">
-            <tbody>
-              <% for s in @other_subjects do %>
-                <tr>
-                  <td><span class="">.<%= s.attachment_original_filename.split('.').last if s.attachment_original_filename %></span></td>
-                  <td>
-                    <%= link_to s.name, s %><br>
-                    <small>
-                      <%= number_to_human_size s.attachment_size %>,
-                      <%= s.taggings.map{|c| content_tag :span, link_to(c.tag.name, subjects_path(q: "tag:#{c.tag.name}"), style: ''), class: ''}.join(' ').html_safe %>
-                    </small>
-                  </td>
-                  <td>
-                    <span class="pull-right">
-                      <%= link_to fa_icon('edit', text: 'edit'), edit_subject_path(s), class: 'btn btn-sm btn-default' if current_user %>
-                      <%= link_to fa_icon('remove', text: 'delete'), s, method: :delete, class: 'btn btn-sm btn-default' if current_user %>
-                    </span>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>   
-      </div>
-      
+  <div class="col-md-7">
+    <div class="well" style="padding:10px 10px;">
+      <span id="page-result-info">
+        <%= page_entries_info @subjects, model: @type %>
+      </span>
+      <%= render_filterrific_spinner %>
+      <%= link_to('Reset', reset_filterrific_url, class: 'pull-right btn btn-sm btn-default', style: 'margin-top: -2px;line-height:1;') %>
     </div>
-  </section>
+    <%= render(partial: 'subjects/list', locals: { subjects: @subjects }) %>
+    <div style="margin-top: 20px; margin-bottom: 10px;">
+      <%= render 'shared/per_page' %>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <%= content_tag :div, class: 'clearfix' do %>
+      <%= content_tag :div do %>
+        <%= link_to fa_icon('upload', text: 'Upload'), new_subject_path, class: 'btn btn-success' if current_user %>
+        <%= link_to fa_icon('share-alt', text: 'Sharing'),"#record-access-settings", class: 'btn btn-warning', data: {toggle: 'collapse'} if can_administrate? %>
+        <hr>
+      <% end if current_user %>
+
+      <%= content_tag :div, id: "show-target", data: {spy: 'affix', 'offset-top': "60"} do %>
+        <%= render partial: 'subjects/show', locals: { subject: @subjects.first }%>
+      <% end if !browser.device.mobile? %>
+    <% end %>
+  </div>
+
 </div>

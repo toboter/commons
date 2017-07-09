@@ -1,18 +1,21 @@
 <div class="row">
   <div class="col-md-8">
-    <%= image_tag @subject.attachment.url, class: 'img-responsive' if @subject.content_type.include?('image') %>
-
+    <%= render_image(@subject, 640) %>
+    <%= link_to 'object', @subject.file_url(:video) %>
+    <%= @subject.file_data %>
   </div>
   
   <div class="col-md-4">
     <% if current_user %>
-      <%= link_to fa_icon('edit', text: 'Edit'), edit_subject_path(@subject), class: 'btn btn-default' %>
+      <%= link_to fa_icon('edit', text: 'Edit'), [:edit, @subject], class: 'btn btn-default' %>
       <%= link_to fa_icon('remove', text: 'Delete'), @subject, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default' %>
     <% end %>
 
     <p>
       <strong>Title:</strong>
       <%= @subject.name %>
+      <strong><%= @subject.type %></strong>
+      <strong><%= @subject.content_type %></strong>
     </p>
     <p>
       <strong>Description:</strong>
@@ -24,36 +27,8 @@
       <%= @subject.tags.map{|c| content_tag :span, link_to(c.name, subjects_path(q: "#{c.name}"), style: 'color: white;'), class: 'label label-default'}.join(' ').html_safe %>
     </p>
     
-    <p>
-      <strong>Comments:</strong>
-
-    </p>
-    
     <hr>
-    <p>
-      <strong>Attachment:</strong>
-      <%= @subject.attachment %>
-    </p>
-    
-    <p>
-      <strong>Content type:</strong>
-      <%= @subject.content_type %>
-    </p>
 
-    <p>
-      <strong>Size:</strong>
-      <%= number_to_human_size @subject.attachment_size %>
-    </p>
-
-    <p>
-      <strong>Dimensions:</strong>
-      <%= @subject.width %> x <%= @subject.height %>
-    </p>
-        
-    <p>
-      <strong>Original filename:</strong>
-      <%= @subject.attachment_original_filename %>
-    </p> 
      
     
     <hr>
@@ -68,5 +43,16 @@
       <%= @subject.copyright_license %>
     </p>
     
+
+          <%= content_tag :div, id: 'comments', role: 'tabpanel', class: 'tab-pane' do %>
+            <%= commentables_for(@subject) %>
+          <% end %>
+
+          <%= content_tag :div, id: 'sharing', role: 'tabpanel', class: 'tab-pane' do %>
+            <%= shared_with(@subject) %>
+          <% end %>
+
+
+
   </div>
 </div>

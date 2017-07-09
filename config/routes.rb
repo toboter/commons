@@ -1,19 +1,23 @@
 Rails.application.routes.draw do
-  
-  get '/auth/:provider/callback', to: 'sessions#create'
-  get '/signout', to: 'sessions#destroy', as: 'signout'
-  get 'search', to: 'subjects#index'
-  
-  resources :subjects do
-    post 'upload', on: :collection
+  # added by nabu
+  concern :commentable do
+    resources :comments, only: [:index, :new, :create, :destroy]
   end
+  # 'concerns: :commentable' needs to be added to any resource where nabu is included.
+
+  resources :subjects, only: [:index, :show, :new, :create]
+
+  resources :audios, controller: 'subjects', type: 'Audio', concerns: :commentable
+  resources :documents, controller: 'subjects', type: 'Document', concerns: :commentable
+  resources :images, controller: 'subjects', type: 'Image', concerns: :commentable
+  resources :videos, controller: 'subjects', type: 'Video', concerns: :commentable
 
   namespace :api, defaults: {format: 'json'} do
     scope module: :v1 do
-      resources :media, only: [:index, :show] do
+      resources :commons, only: [:index, :show] do
         collection do
           get 'search'
-        end 
+        end
       end  
     end
   end

@@ -1,11 +1,10 @@
 <%= simple_form_for(@subject, html: { multipart: true }) do |f| %>
   <%= f.error_notification %>
-  <%= f.hidden_field :attachment_cache %>
+
 
   <div class="form-inputs">
-
-    <%= image_tag(@subject.attachment.thumb.url) if @subject.attachment? && @subject.content_type.include?('image') %>
-    <%= f.input :attachment, as: :file %>
+    <%= f.file_field :file %>
+    
     <%= f.input :name %>
     <%= f.input :description %>
     <%= f.input :tag_list, collection: ActsAsTaggableOn::Tag.order(name: :asc), label_method: :name, 

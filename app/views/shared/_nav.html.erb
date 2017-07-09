@@ -1,0 +1,4 @@
+<%= content_tag :li, link_to('Subjects', subjects_path), class: ('active' if @subjects.present?) %>
+<hr>
+<%= content_tag :li, link_to('API', api_path), class: ('active' if current_page?(api_url)) %>
+<%= content_tag :li, link_to('Help', help_path), class: ('active' if current_page?(help_path)) %></li>

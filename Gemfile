@@ -55,12 +55,34 @@ gem "font-awesome-rails"
 gem 'cocoon'
 gem 'jquery-turbolinks'
 gem 'will_paginate-bootstrap'
-gem 'omniauth-oauth2'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'search_cop'        # https://github.com/mrkamel/search_cop
+gem 'filterrific'
 gem 'acts-as-taggable-on', '~> 4.0'
+gem 'browser'
+gem 'cancancan', '~> 1.10'
 
-gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
-gem "mini_magick"
+# Auth & Babili
+# gem 'marduk', path: '/home/tschmidt/dev/babylon/gem_dev/marduk'
+gem 'marduk', git: 'https://github.com/toboter/marduk.git'
+
+# Record Sharing
+# gem 'enki', path: '/home/tschmidt/dev/babylon/gem_dev/enki'
+gem 'enki', git: 'https://github.com/toboter/enki.git'
+
+# Comments
+# gem 'nabu', path: '/home/tschmidt/dev/babylon/gem_dev/nabu'
+gem 'nabu', git: 'https://github.com/toboter/nabu.git'
+gem 'rails-bootstrap-markdown'
+gem 'closure_tree'
+
+# needs ffmpeg, imagemagick, libmagic-dev
+gem "ruby-filemagic"
+gem "mimemagic"
+gem 'fastimage'
+gem "streamio-ffmpeg"
+gem "mini_magick", ">= 4.3.5"
+gem "image_processing"
+gem "shrine"
 
 ruby '2.3.1'

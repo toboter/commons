@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for?(:title) ? yield(:title) : 'media.babylon-online.org' %></title>
+    <title><%= content_for?(:title) ? yield(:title) : 'commons.babylon-online.org' %></title>
     <%= csrf_meta_tags %>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    
+    <%= yield(:head) if content_for?(:head) %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -20,15 +20,36 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <%= link_to 'media.babylon-online.org', root_url, class: "navbar-brand" %>
+          <%= link_to 'commons.babylon-online.org', root_url, class: "navbar-brand" %>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-left">
-            <%= content_tag :p, fa_icon('user', text: "Signed in as #{current_user.try(:name)}"), class: 'navbar-text' if current_user %>
-          </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><%= link_to 'API', api_path %></li>
-            <li><%= link_to 'Help', help_path %></li>
+            <li class="dropdown visible-xs-block" style="margin-left:20px;">
+              <p class="navbar-text dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <%= fa_icon('th-large', text: "Menu") %>
+                <span class="caret"></span>
+              </p>
+              <ul class="dropdown-menu">
+                <%= render 'shared/nav' %>
+              </ul>
+            </li>            
+            <% if current_user %> 
+              <li class="dropdown" style="margin-left:20px;">
+                <p class="navbar-text dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <%= fa_icon('user', text: "#{current_user.try(:name)}") %>
+                  <span class="caret"></span>
+                </p>
+
+                <ul class="dropdown-menu">
+                  <%= content_tag :li, link_to(fa_icon('cog', text: "Settings"), settings_users_path) if current_user %>
+                  <%= content_tag :li, link_to(fa_icon('users', text: "Users"), users_path) if can_administrate? %>
+                  <li role="separator" class="divider"></li>        
+                  <li><%= link_to fa_icon('sign-out', text: "Sign Out"), signout_path %></li>
+                </ul>
+              </li>
+            <% else %>
+              <li><%= link_to fa_icon('sign-in', text: "Sign in through Bab-ili"), "/auth/babili" %></li>
+            <% end %>
           </ul>
         </div>
       </div>
@@ -36,22 +57,14 @@
 
     <div class="container-fluid" style="margin-top: 60px;">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div class="col-sm-3 col-md-2 sidebar hidden-xs">
           <ul class="nav nav-pills nav-stacked">
-            <%= content_tag :li, link_to('Images', subjects_path), class: ('active' if @images.present?) %>
+            <%= render 'shared/nav' %>
           </ul>
-
-          <hr>
-          <ul class="nav nav-pills nav-stacked">
-            <li><%= link_to 'API', api_path %></li>
-            <li><%= link_to 'Help', help_path %></li>
-          </ul>
-          
           <p class="text-muted" style="margin-left:15px; margin-top:20px;"><small>v. <%= APP_VERSION %></small></p>
-             
         </div>
         
-        <div class="col-sm-8 col-sm-offset-1 col-md-9 col-md-offset-1 main">
+        <div class="col-sm-9 col-md-10 main">
           <%= content_tag :div, class: "page-header" do %>
             <h1 class="">
               <%= yield(:title) if content_for?(:title) %>
@@ -59,7 +72,7 @@
                 <%= yield(:buttons) if content_for?(:buttons) %>
               </div>
             </h1>
-          <% end if content_for?(:buttons) || content_for?(:title) %>
+          <% end if content_for?(:buttons) || content_for?(:title) && @show_header %>
           
           <%= content_tag :div, class: 'row' do %>
             <div class="col-md-12">
@@ -101,16 +114,8 @@
             <ul class="nav navbar-nav"> 
               <li><%= link_to "About", "#{Rails.application.secrets.provider_site}/about" %></li>
               <li><%= link_to "Imprint", "#{Rails.application.secrets.provider_site}/imprint" %></li>
-              <li><%= link_to 'Contact', "#{Rails.application.secrets.provider_site}/contact?origin=media" %></li>
-            </ul>
-            
-            <ul class="nav navbar-nav navbar-right">
-              <% if current_user %>        
-                <li><%= link_to fa_icon('sign-out', text: "Sign Out"), signout_path %></li>
-              <% else %>
-                <li><%= link_to fa_icon('sign-in', text: "Sign in through Bab-ili"), "/auth/babili" %></li>
-              <% end %>
-            </ul>            
+              <li><%= link_to 'Contact', "#{Rails.application.secrets.provider_site}/contact?origin=commons" %></li>
+            </ul>           
           </div>        
         </div>
       </nav>

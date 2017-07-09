@@ -1,0 +1,14 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <% if subject %>
+      <h4>
+        <%= link_to subject.name, subject %>
+        <%= link_to fa_icon('remove'), subject, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger pull-right' %>
+        <%= link_to fa_icon('edit'), [:edit, subject], class: 'btn btn-sm btn-warning pull-right' %>
+      </h4>
+      <%= render_image(subject, 320)%>
+      <%= subject.inspect %>
+
+    <% end %>
+  </div>
+</div>

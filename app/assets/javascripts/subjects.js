@@ -9,7 +9,7 @@ $(document).ready(function() {
     changeInput: '<div class="jFiler-input-dragDrop"><div class="jFiler-input-inner"><div class="jFiler-input-icon"><i class="icon-jfi-folder"></i></div><div class="jFiler-input-text"><h3>Click on this box</h3> <span style="display:inline-block; margin: 15px 0">or</span></div><a class="jFiler-input-choose-btn btn-custom blue-light">Browse Files</a></div></div>',
     theme: "dragdropbox",
     uploadFile: {
-      url: "/subjects/upload",
+      url: "/subjects.js",
       data: {},
       type: 'POST',
       enctype: 'multipart/form-data',

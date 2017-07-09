@@ -1,0 +1,28 @@
+<div id="filterrific_results">
+
+  <div class="collapse" id="record-access-settings">
+    <%= share_multiple_with(Subject) %>
+  </div>
+
+  <ul class="list-group">
+    <% subjects.each do |subject| %>
+      <%= link_to subject, remote: !browser.device.mobile?, class: "list-group-item" do %>
+        <div class="media-left">
+          <%= render_thumb(subject, 40) %>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading"><%= subject.name %></h4>
+          <%= render_type_symbol(subject) %>
+        </div>
+        <div class="media-left">
+          functione
+          
+        </div>
+      <% end %>
+    <% end %>
+  </ul>
+  
+  <div id="pagination-results">
+    <%= will_paginate subjects, params: params.merge({filterrific: nil}), renderer: BootstrapPagination::Rails %>
+  </div>
+</div>
