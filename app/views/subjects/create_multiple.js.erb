@@ -1,5 +1,0 @@
-<% if @subject.new_record? %>
-  alert("Failed to upload subject: <%= j @subject.errors.full_messages.join(', ').html_safe %>");
-<% else %>
-  $("#uploads").append("<%= j render(@subject) %>");
-<% end %>

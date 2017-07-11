@@ -1,0 +1,12 @@
+<%= link_to subject, remote: !browser.device.mobile?, class: "list-group-item", id: "subject-results-list-group-item-#{subject.id}" do %>
+  <div class="media-left">
+    <%= render_thumb(subject, 40) %>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading"><%= subject.name %></h4>
+    <%= render_type_symbol(subject) %>
+  </div>
+  <div class="media-right">
+    functione
+  </div>
+<% end %>

@@ -4,21 +4,9 @@
     <%= share_multiple_with(Subject) %>
   </div>
 
-  <ul class="list-group">
+  <ul class="list-group" id="subject-results-list-group">
     <% subjects.each do |subject| %>
-      <%= link_to subject, remote: !browser.device.mobile?, class: "list-group-item" do %>
-        <div class="media-left">
-          <%= render_thumb(subject, 40) %>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading"><%= subject.name %></h4>
-          <%= render_type_symbol(subject) %>
-        </div>
-        <div class="media-left">
-          functione
-          
-        </div>
-      <% end %>
+      <%= render(partial: 'subjects/list_item', locals: { subject: subject }) %>
     <% end %>
   </ul>
   

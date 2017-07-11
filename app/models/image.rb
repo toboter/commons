@@ -6,7 +6,7 @@ class Image < Subject
   end
 
   filterrific(
-    default_filter_params: { sorted_by: 'name_asc' },
+    default_filter_params: { sorted_by: 'created_at_desc' },
     available_filters: [
       :sorted_by,
       :search
@@ -15,7 +15,7 @@ class Image < Subject
 
   search_scope :search do
     attributes :name, :type
-    attributes :tag => "tags.name"
+    attributes :tag => "tags.name" # verbunden mit AND suchen
   end
 
   scope :sorted_by, lambda { |sort_option|
@@ -23,6 +23,8 @@ class Image < Subject
     case sort_option.to_s
     when /^name_/
       order("LOWER(subjects.name) #{ direction }")
+    when /^created_at_/
+      order("subjects.created_at #{ direction }")
     else
       raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
     end
@@ -31,7 +33,9 @@ class Image < Subject
   def self.options_for_sorted_by
     [
       ['Name (a-z)', 'name_asc'],
-      ['Name (z-a)', 'name_desc']
+      ['Name (z-a)', 'name_desc'],
+      ['Oldest first', 'created_at_asc'],
+      ['Newest first', 'created_at_desc']
     ]
   end
 

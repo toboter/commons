@@ -12,7 +12,7 @@ class SubjectsController < ApplicationController
   # GET /subjects.json
   def index
     @filterrific = initialize_filterrific(
-      type_class, #.visible_for(current_user),
+      type_class.visible_for(current_user),
       params[:filterrific],
       select_options: {
         sorted_by: Subject.options_for_sorted_by
@@ -52,9 +52,11 @@ class SubjectsController < ApplicationController
     respond_to do |format|
       if @subject.save
         format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
+        format.json { render :show, status: :created, location: @subject }
         format.js
       else
         format.html { render :new }
+        format.json { render json: @subject.errors, status: :unprocessable_entity }
         format.js
       end
     end

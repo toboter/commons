@@ -18,7 +18,7 @@
 //= require cocoon
 //= require filterrific/filterrific-jquery
 //= require bootstrap-markdown-bundle
-//= require jquery.filer
+//= require jquery-fileupload
 //= require turbolinks
 //= require turbolinks-compatibility
 //= require_tree .

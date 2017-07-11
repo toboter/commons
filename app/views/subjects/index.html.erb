@@ -27,6 +27,48 @@
       <%= render_filterrific_spinner %>
       <%= link_to('Reset', reset_filterrific_url, class: 'pull-right btn btn-sm btn-default', style: 'margin-top: -2px;line-height:1;') %>
     </div>
+
+        <%= content_tag :div, class: "hidden", id: "upload-multiple-area" do %>
+          <!-- The file upload form used as target for the file upload widget -->
+          <%= form_tag(subjects_path, multipart: true, id: 'fileupload') do %>
+            <!-- Redirect browsers with JavaScript disabled to the origin page -->
+            <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
+            <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+            <div class="row fileupload-buttonbar">
+              <div class="col-lg-8">
+                <!-- The fileinput-button span is used to style the file input field as button -->
+                <span class="btn btn-success fileinput-button">
+                  <i class="glyphicon glyphicon-plus"></i>
+                  <span>Add files...</span>
+                  <%= file_field_tag :file, multiple: true %>
+                </span>
+                <button type="submit" class="btn btn-primary start">
+                  <i class="glyphicon glyphicon-upload"></i>
+                  <span>Start Upload</span>
+                </button>
+                <button type="reset" class="btn btn-warning cancel">
+                  <i class="glyphicon glyphicon-ban-circle"></i>
+                  <span>Cancel Upload</span>
+                </button>
+                <!-- The global file processing state -->
+                <span class="fileupload-process"></span>
+              </div>
+              <!-- The global progress state -->
+              <div class="col-lg-4 fileupload-progress fade">
+                <!-- The global progress bar -->
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                </div>
+                <!-- The extended global progress state -->
+                <div class="progress-extended">&nbsp;</div>
+              </div>
+            </div>
+            <!-- The table listing the files available for upload/download -->
+            <ul class="list-group files">
+            </ul>
+          <% end %>
+        <% end if can_create? %>
+
     <%= render(partial: 'subjects/list', locals: { subjects: @subjects }) %>
     <div style="margin-top: 20px; margin-bottom: 10px;">
       <%= render 'shared/per_page' %>
@@ -36,9 +78,10 @@
   <div class="col-md-5">
     <%= content_tag :div, class: 'clearfix' do %>
       <%= content_tag :div do %>
-        <%= link_to fa_icon('upload', text: 'Upload'), new_subject_path, class: 'btn btn-success' if current_user %>
-        <%= link_to fa_icon('share-alt', text: 'Sharing'),"#record-access-settings", class: 'btn btn-warning', data: {toggle: 'collapse'} if can_administrate? %>
+        <%= link_to fa_icon('upload', text: 'Upload'), new_subject_path, remote: true, class: 'btn btn-success', id: 'new-upload-button' if can_create? %>
+        <%= link_to fa_icon('share-alt', text: 'Sharing'),"#record-access-settings", class: 'btn btn-warning', id: 'record-sharing-button', data: {toggle: 'collapse'} if can_administrate? %>
         <hr>
+
       <% end if current_user %>
 
       <%= content_tag :div, id: "show-target", data: {spy: 'affix', 'offset-top': "60"} do %>

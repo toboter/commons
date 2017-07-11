@@ -61,6 +61,7 @@ gem 'filterrific'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'browser'
 gem 'cancancan', '~> 1.10'
+gem "jquery-fileupload-rails"
 
 # Auth & Babili
 # gem 'marduk', path: '/home/tschmidt/dev/babylon/gem_dev/marduk'
@@ -76,13 +77,15 @@ gem 'nabu', git: 'https://github.com/toboter/nabu.git'
 gem 'rails-bootstrap-markdown'
 gem 'closure_tree'
 
-# needs ffmpeg, imagemagick, libmagic-dev
-gem "ruby-filemagic"
-gem "mimemagic"
-gem 'fastimage'
-gem "streamio-ffmpeg"
-gem "mini_magick", ">= 4.3.5"
-gem "image_processing"
+# needs ffmpeg, imagemagick, libmagic-dev, apache-tika
+gem "ruby-filemagic"            # Content negotiation
+gem "mimemagic"                 # Content negotiation
+gem 'exiftool_vendored'         # Metadata extraction
+gem "streamio-ffmpeg"           # Video, Audio processing
+# gem 'yomu'                    # Document extraction
+gem 'fastimage'                 # Image processing
+gem "mini_magick", ">= 4.3.5"   # Image processing
+gem "image_processing"          # Image processing
 gem "shrine"
 
 ruby '2.3.1'

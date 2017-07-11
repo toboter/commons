@@ -1,15 +1,6 @@
 <% title 'Upload Files' %>
   <div class="col-md-12" style="margin: 30px 0;">
 
-  <div class="col-md-12 hidden" id="upload-multiple" style="margin: 30px 0;">
-    <h4>Multiple Files</h4>
-    <%= form_tag(subjects_path, multipart: true, remote: true) do %>
-      <%= file_field_tag "[subject][file]",
-        multiple: true,
-        id: 'multiple_new_subjects' %>
-    <% end %>
-  </div>
-
     <h4>Single File</h4>
     <%= render 'form', subject: @subject %>
   </div>
