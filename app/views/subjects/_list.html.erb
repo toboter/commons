@@ -4,11 +4,11 @@
     <%= share_multiple_with(Subject) %>
   </div>
 
-  <ul class="list-group" id="subject-results-list-group">
+  <div class="list-group" id="subject-results-list-group">
     <% subjects.each do |subject| %>
       <%= render(partial: 'subjects/list_item', locals: { subject: subject }) %>
     <% end %>
-  </ul>
+  </div>
   
   <div id="pagination-results">
     <%= will_paginate subjects, params: params.merge({filterrific: nil}), renderer: BootstrapPagination::Rails %>

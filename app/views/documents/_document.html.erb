@@ -1,2 +1,21 @@
 <%= link_to 'object', document.file_url %>
-<%= document.file.inspect %>
+
+<% if local_assigns[:full] %>
+  <div class="">
+    <h4>Metadata of the original file</h4>
+    <table class="table table-bordered">
+      <tbody>
+        <% document.file.metadata.each do |key, value| %>
+          <tr>
+            <td>
+              <%= key.humanize %>
+            </td>
+            <td>
+              <%= value %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

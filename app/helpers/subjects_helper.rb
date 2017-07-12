@@ -12,14 +12,6 @@ module SubjectsHelper
     end
   end
 
-  def render_image(subject, size=640)
-    if subject.type == 'Image' || subject.type == 'Video'
-      image_tag subject.file_url("size_#{size.to_s}".to_sym), class: 'img-responsive', style: 'width:100%;'
-    else
-      subject.file_url
-    end
-  end
-
   def render_type_symbol(subject)
     if subject.type == 'Image'
       fa_icon('file-image-o')

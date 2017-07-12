@@ -1,13 +1,34 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <% if subject %>
-      <h4>
-        <%= link_to subject.name, subject %>
-        <%= link_to fa_icon('remove'), subject, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger pull-right' %>
-        <%= link_to fa_icon('edit'), [:edit, subject], class: 'btn btn-sm btn-warning pull-right' %>
-      </h4>
-      <%= render subject, as: subject.type.to_sym %>
+      <%= content_tag :p, "#{fa_icon('link')} #{link_to(polymorphic_url(subject), subject)}".html_safe %>
+      <%= link_to fa_icon('edit', text: 'Edit'), [:edit, subject], class: 'btn btn-sm btn-warning pull-right', style: 'margin-top: 5px;' %>
+      <%= content_tag :h3, link_to(subject.name, subject) %>
 
+      <%= render subject, as: subject.type.to_sym, full: false %>
+
+      <div class="panel panel-default" style="margin-top:10px;">
+        <div class="panel-body">
+          <p><%= render_type_symbol(subject) %> <span class="text-muted"><strong><%= subject.content_type %></strong></span></p>
+          <p>
+            <strong>Title:</strong>
+            <%= subject.name %>
+          </p>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p>
+            <strong>Copyright owner:</strong>
+            <%= subject.copyright_owner %> (linkto)<br>
+            <small>If linkto in people Disclaimer</small>
+          </p>
+          <p>
+            <strong>Copyright license:</strong>
+            <%= subject.copyright_license %>
+          </p>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>

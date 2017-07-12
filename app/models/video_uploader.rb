@@ -25,7 +25,7 @@ class VideoUploader < SubjectUploader
     thumb_80  = resize_to_fill(thumb_160,  80, 80)
     thumb_40  = resize_to_fill(thumb_80,  40, 40)
 
-    {video: video, size_1280: size_1280, size_640: size_640, size_320: size_320, 
+    {original: video, size_1280: size_1280, size_640: size_640, size_320: size_320, 
       thumb_160: thumb_160, thumb_80: thumb_80, thumb_40: thumb_40}
   end
 end

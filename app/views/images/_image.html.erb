@@ -1,3 +1,21 @@
-<%= render_image(image, 640) %>
-<%= link_to 'object', image.file_url(:original) %>
-<%= image.file[:original].metadata %>
+<%= image_tag image.file_url(local_assigns[:full] ? :size_1280 : :size_640), class: 'img-responsive', style: 'width:100%;' %>
+
+<% if local_assigns[:full] %>
+  <div class="">
+    <h4>Metadata of the original file</h4>
+    <table class="table table-bordered">
+      <tbody>
+        <% image.file[:original].metadata.each do |key, value| %>
+          <tr>
+            <td>
+              <%= key.humanize %>
+            </td>
+            <td>
+              <%= value %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

@@ -1,3 +1,21 @@
 <%= audio_tag audio.file_url, controls: true %>
-<%= link_to 'object', audio.file_url %>
-<%= audio.inspect %>
+
+<% if local_assigns[:full] %>
+  <div class="">
+    <h4>Metadata of the original file</h4>
+    <table class="table table-bordered">
+      <tbody>
+        <% audio.file.metadata.each do |key, value| %>
+          <tr>
+            <td>
+              <%= key.humanize %>
+            </td>
+            <td>
+              <%= value %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

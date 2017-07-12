@@ -20,7 +20,7 @@ $(function () {
         //xhrFields: {withCredentials: true},
         url: '/subjects',
         paramName: 'subject[file]',
-        filesContainer: $('ul.files'),
+        filesContainer: $('div.files'),
         uploadTemplateId: null,
         downloadTemplateId: null,
         previewMaxWidth: 40,
@@ -31,7 +31,7 @@ $(function () {
         uploadTemplate: function (o) {
             var rows = $();
             $.each(o.files, function (index, file) {
-                var row = $('<li class="list-group-item template-upload fade">' +
+                var row = $('<a class="list-group-item template-upload fade">' +
                                 '<div class="media-left">' +
                                     '<span class="preview"></span>' +
                                 '</div>' +
@@ -50,7 +50,7 @@ $(function () {
                                             '<button class="start btn btn-primary btn-sm pull-right" style="margin-left:3px;" disabled><i class="glyphicon glyphicon-upload"></i></button>' : '') +
                                         (!index ? '<button class="cancel btn btn-warning btn-sm pull-right"><i class="glyphicon glyphicon-ban-circle"></i></button>' : '') +         
                                 '</div>' +
-                            '</li>');
+                            '</a>');
                 row.find('.name').text(file.name);
                 row.find('.size').text(o.formatFileSize(file.size));
                 if (file.error) {
