@@ -1,0 +1,3 @@
+class VideosController < SubjectsController
+
+end

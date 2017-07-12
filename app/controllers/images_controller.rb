@@ -1,0 +1,3 @@
+class ImagesController < SubjectsController
+
+end

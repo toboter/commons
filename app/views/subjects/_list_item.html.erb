@@ -7,6 +7,6 @@
     <%= render_type_symbol(subject) %>
   </div>
   <div class="media-right">
-    functione
+    <%= content_tag :span, fa_icon('star'), class: 'pull-right' if subject.recently_added %>
   </div>
 <% end %>

@@ -1,0 +1,3 @@
+class DocumentsController < SubjectsController
+
+end

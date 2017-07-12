@@ -52,6 +52,10 @@ class Subject < ApplicationRecord
     ]
   end
 
+  def recently_added
+    created_at > Time.now - 30.minutes
+  end
+
 
   def obfuscated_id
     SecureRandom.hex(10) # File.basename(attachment.filename, '.*').titleize if attachment.present?

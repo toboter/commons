@@ -26,6 +26,8 @@ $(function () {
         previewMaxWidth: 40,
         previewMaxHeight: 40,
         previewCrop: true,
+        disableVideoPreview: true,
+        disableAudioPreview: true,
         uploadTemplate: function (o) {
             var rows = $();
             $.each(o.files, function (index, file) {
@@ -73,7 +75,7 @@ $(function () {
                                     (file.error ? '<div class="error"></div>' : '') +
                                 '</div>' +
                                 '<div class="media-right" style="width:15%;">' +
-                                    '<i class="glyphicon glyphicon-ok-sign pull-right"></i>' +
+                                    (file.error ? '<i class="glyphicon glyphicon-remove-sign pull-right"></i>' : '<i class="glyphicon glyphicon-ok-sign pull-right"></i>') +
                                 '</div>' +
                             '</a>');
                 row.find('.size').text(o.formatFileSize(file.size));

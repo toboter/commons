@@ -1,0 +1,3 @@
+class AudiosController < SubjectsController
+
+end

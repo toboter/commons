@@ -1,4 +1,5 @@
 class DocumentUploader < SubjectUploader
+
   # processing gem 'yomu'
   # data = File.read 'sample.pages'
   # text = Yomu.read :text, data

@@ -22,8 +22,7 @@ class SubjectsController < ApplicationController
 
   end
 
-  # GET /subjects/1
-  # GET /subjects/1.json
+
   def show
   end
 
@@ -37,30 +36,39 @@ class SubjectsController < ApplicationController
   end
 
 
-
   # POST /subjects
   # POST /subjects.json
   def create
     file = subject_params[:file].class == Array ? subject_params[:file].first : subject_params[:file]
     media_type = media_type_for(content_type_for(file.tempfile), file.content_type)
 
-    @subject = media_type.constantize.new(file: file)
-    @subject.content_type = file.content_type
-    @subject.copyright_owner = current_user.name if @subject.copyright_owner.blank?
-    @subject.copyright_license = 'CC BY-NC-SA 4.0' if @subject.copyright_license.blank?
-    
+    @subject = media_type.constantize.new
+
     respond_to do |format|
-      if @subject.save
-        format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
-        format.json { render :show, status: :created, location: @subject }
-        format.js
+      if @subject.class.name != 'Subject' 
+        @subject.file = file
+        @subject.content_type = file.content_type
+        @subject.copyright_owner = current_user.name if @subject.copyright_owner.blank?
+        @subject.copyright_license = 'CC BY-NC-SA 4.0' if @subject.copyright_license.blank?
+        
+        if @subject.save
+          format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
+          format.json { render :show, status: :created, location: @subject }
+          format.js
+        else
+          format.html { render :new }
+          format.json { render json: @subject.errors, status: :unprocessable_entity }
+          format.js
+        end
       else
+        output = {files: [{name: file.original_filename, size: 0, error: 'Filetype not allowed'}]}
+        # hier wird an ams weiter geleitet und NULL gerendert. Das falsch.
         format.html { render :new }
-        format.json { render json: @subject.errors, status: :unprocessable_entity }
-        format.js
+        format.json { render json: output, status: :unsupported_media_type }
       end
     end
   end
+
 
   # PATCH/PUT /subjects/1
   # PATCH/PUT /subjects/1.json

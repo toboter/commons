@@ -1,6 +1,13 @@
 <% title 'Upload Files' %>
-  <div class="col-md-12" style="margin: 30px 0;">
 
-    <h4>Single File</h4>
-    <%= render 'form', subject: @subject %>
+<%= simple_form_for(@subject, html: { multipart: true }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.file_field :file %>
   </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

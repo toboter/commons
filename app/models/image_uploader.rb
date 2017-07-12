@@ -2,7 +2,6 @@ require "image_processing/mini_magick"
 
 class ImageUploader < SubjectUploader
   include ImageProcessing::MiniMagick
-
   plugin :store_dimensions
   plugin :processing
   plugin :versions
