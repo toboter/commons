@@ -24,6 +24,13 @@
 
         <div class="tab-content">
           <%= content_tag :div, id: 'identity', role: 'tabpanel', class: 'tab-pane active' do %>
+
+            <div class="input-group" style="margin-top:10px;">
+              <%= text_field_tag '', polymorphic_url(@subject), class: 'form-control', id: 'subject-url-input', readonly: true %>
+              <span class="input-group-btn">
+                <%= link_to fa_icon('clipboard'), 'javascript:;', class: 'btn btn-default clipboard-btn', data: {'clipboard-target': "#subject-url-input"} %>
+              </span>
+            </div>
             <div class="panel panel-default" style="margin-top:10px;">
               <div class="panel-body">
                 <p><%= render_type_symbol(@subject) %> <span class="text-muted"><strong><%= @subject.content_type %></strong></span></p>
@@ -37,22 +44,23 @@
             <div class="panel panel-default">
               <div class="panel-body">
                 <p>
-                  <strong>Copyright owner:</strong>
-                  <%= @subject.copyright_owner %> (linkto)<br>
+                  <strong>Copyright:</strong>
+                  <%= @subject.file_copyright %> (linkto)<br>
                   <small>If linkto in people Disclaimer</small>
                 </p>
                 <p>
-                  <strong>Copyright license:</strong>
-                  <%= @subject.copyright_license %>
+                  <strong>Copyright Details:</strong>
+                  <%= @subject.file_copyright_details %>
                 </p>
               </div>
             </div>
 
-            <h4>Versions</h4>
+            <h4>File Versions</h4>
             <ul class="list-group">
               <% if @subject.file.is_a?(Hash) %>
                 <% @subject.file.each do |key, version| %>
                   <li class="list-group-item">
+                    <%= link_to fa_icon('clipboard'), 'javascript:;', class: 'clipboard-btn', data: {'clipboard-action': 'copy', 'clipboard-text': "#{Rails.application.secrets.host}#{version.url}" }%>
                     <strong><%= key.to_s.humanize %></strong>
                     <span class="pull-right">
                       <%= content_tag :span, "#{version.width}x#{version.height} | ", class: 'text-muted small'  if version.try(:width) && version.try(:height) %>
@@ -63,6 +71,7 @@
                 <% end %>
               <% else %>
                 <li class="list-group-item">
+                  <%= link_to fa_icon('clipboard'), 'javascript:;', class: 'clipboard-btn', data: {'clipboard-action': 'copy', 'clipboard-text': "#{Rails.application.secrets.host}#{@subject.file_url}" }%>
                   <strong>Original</strong>
                   <span class="pull-right">
                     <%= content_tag :span, number_to_human_size(@subject.file.size), class: 'text-muted small' %>
@@ -71,6 +80,7 @@
                 </li>
               <% end %>
             </ul>
+            
           <% end %>
 
           <%= content_tag :div, id: 'content', role: 'tabpanel', class: 'tab-pane' do %>

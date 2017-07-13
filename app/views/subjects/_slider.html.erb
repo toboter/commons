@@ -1,8 +1,13 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <% if subject %>
-      <%= content_tag :p, "#{fa_icon('link')} #{link_to(polymorphic_url(subject), subject)}".html_safe %>
-      <%= link_to fa_icon('edit', text: 'Edit'), [:edit, subject], class: 'btn btn-sm btn-warning pull-right', style: 'margin-top: 5px;' %>
+      <div class="input-group" style="">
+        <%= text_field_tag '', polymorphic_url(subject), class: 'form-control', id: 'subject-url-input', readonly: true %>
+        <span class="input-group-btn">
+          <%= link_to fa_icon('clipboard'), 'javascript:;', class: 'btn btn-default clipboard-btn', data: {'clipboard-target': "#subject-url-input"} %>
+        </span>
+      </div>
+
       <%= content_tag :h3, link_to(subject.name, subject) %>
 
       <%= render subject, as: subject.type.to_sym, full: false %>
@@ -19,16 +24,17 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <p>
-            <strong>Copyright owner:</strong>
-            <%= subject.copyright_owner %> (linkto)<br>
+            <strong>Copyright:</strong>
+            <%= subject.file_copyright %> (linkto)<br>
             <small>If linkto in people Disclaimer</small>
           </p>
           <p>
-            <strong>Copyright license:</strong>
-            <%= subject.copyright_license %>
+            <strong>Copyright Details:</strong>
+            <%= subject.file_copyright_details %>
           </p>
         </div>
       </div>
+      <%= link_to fa_icon('edit', text: 'Edit'), [:edit, subject], class: 'btn btn-sm btn-warning pull-right', style: 'margin-top: 5px;' %>
     <% end %>
   </div>
 </div>

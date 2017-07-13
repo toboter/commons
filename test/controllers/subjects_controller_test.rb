@@ -17,7 +17,7 @@ class SubjectsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create subject" do
     assert_difference('Subject.count') do
-      post subjects_url, params: { subject: { attachment: @subject.attachment, content_type: @subject.content_type, copyright_license: @subject.copyright_license, copyright_owner: @subject.copyright_owner, name: @subject.name } }
+      post subjects_url, params: { subject: { attachment: @subject.attachment, content_type: @subject.content_type, file_copyright_details: @subject.file_copyright_details, file_copyright: @subject.file_copyright, name: @subject.name } }
     end
 
     assert_redirected_to subject_url(Subject.last)
@@ -34,7 +34,7 @@ class SubjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update subject" do
-    patch subject_url(@subject), params: { subject: { attachment: @subject.attachment, content_type: @subject.content_type, copyright_license: @subject.copyright_license, copyright_owner: @subject.copyright_owner, name: @subject.name } }
+    patch subject_url(@subject), params: { subject: { attachment: @subject.attachment, content_type: @subject.content_type, file_copyright_details: @subject.file_copyright_details, file_copyright: @subject.file_copyright, name: @subject.name } }
     assert_redirected_to subject_url(@subject)
   end
 

@@ -17,5 +17,4 @@ class ImageUploader < SubjectUploader
     {original: io, size_1280: size_1280, size_640: size_640, size_320: size_320, 
       thumb_160: thumb_160, thumb_80: thumb_80, thumb_40: thumb_40}
   end
-
 end

@@ -4,12 +4,12 @@ one:
   name: MyString
   attachment: MyString
   content_type: MyString
-  copyright_owner: MyString
-  copyright_license: MyString
+  file_copyright: MyString
+  file_copyright_details: MyString
 
 two:
   name: MyString
   attachment: MyString
   content_type: MyString
-  copyright_owner: MyString
-  copyright_license: MyString
+  file_copyright: MyString
+  file_copyright_details: MyString

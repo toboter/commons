@@ -61,7 +61,7 @@ gem 'filterrific'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'browser'
 gem 'cancancan', '~> 1.10'
-gem "jquery-fileupload-rails"
+gem 'clipboard-rails'
 
 # Auth & Babili
 # gem 'marduk', path: '/home/tschmidt/dev/babylon/gem_dev/marduk'
@@ -87,5 +87,6 @@ gem 'fastimage'                 # Image processing
 gem "mini_magick", ">= 4.3.5"   # Image processing
 gem "image_processing"          # Image processing
 gem "shrine"
+gem "jquery-fileupload-rails"
 
 ruby '2.3.1'

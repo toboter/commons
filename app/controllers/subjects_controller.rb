@@ -1,4 +1,5 @@
 class SubjectsController < ApplicationController
+  # bug in fileupload fires get request for [object Object]
   before_action :set_type, except: [:new, :create]
   before_action :set_subject, only: [:show, :edit, :update, :destroy]
   before_action :authorize, except: [:index, :show]
@@ -48,8 +49,8 @@ class SubjectsController < ApplicationController
       if @subject.class.name != 'Subject' 
         @subject.file = file
         @subject.content_type = file.content_type
-        @subject.copyright_owner = current_user.name if @subject.copyright_owner.blank?
-        @subject.copyright_license = 'CC BY-NC-SA 4.0' if @subject.copyright_license.blank?
+        @subject.file_copyright = current_user.name if @subject.file_copyright.blank?
+        @subject.file_copyright_details = 'CC BY-NC-SA 4.0' if @subject.file_copyright_details.blank?
         
         if @subject.save
           format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
@@ -143,6 +144,6 @@ class SubjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_params
-      params.require(:subject).permit(:name, :description, :file, :copyright_owner, :copyright_license, :tag_list => [], :file => [])
+      params.require(:subject).permit(:name, :description, :file, :file_copyright, :file_copyright_details, :tag_list => [], :file => [])
     end
 end
