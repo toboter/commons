@@ -1,7 +1,4 @@
-require "streamio-ffmpeg"
-require "image_processing/mini_magick"
-
-class VideoUploader < SubjectUploader
+class VideoUploader < BaseUploader
   include ImageProcessing::MiniMagick
   plugin :processing
   plugin :versions

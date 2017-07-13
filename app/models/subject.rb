@@ -3,19 +3,18 @@ class Subject < ApplicationRecord
   include Enki
   include Nabu
   include SearchCop
-  # include SubjectUploader[:file]
 
   before_validation :set_default_name, on: :create
-  before_validation :set_type, if: :file_data_changed?
 
   self.inheritance_column = :type
   friendly_id :obfuscated_id, use: :slugged
   acts_as_taggable
 
-  validates :type, :name, presence: true
+  validates :type, :name, :file_data, presence: true
+  validates :file_signature, uniqueness: true
 
   def self.types
-    %w(Image Audio Video Document Subject)
+    %w(Image Audio Video Document)
   end
 
   filterrific(
@@ -63,13 +62,8 @@ class Subject < ApplicationRecord
 
   private
 
-  def set_type
-    type = file.mime_type.split("/").first.classify
-    self.type = type if Subject.types.include?(type)
-  end
-
   def set_default_name
-    self.name = file.original_filename
+    self.name = try(:file).try(:original_filename) || nil
   end
 
  

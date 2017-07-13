@@ -1,11 +1,9 @@
-require "image_processing/mini_magick"
-
-class ImageUploader < SubjectUploader
+class ImageUploader < BaseUploader
   include ImageProcessing::MiniMagick
   plugin :store_dimensions
   plugin :processing
   plugin :versions
-
+  
   process(:store) do |io, context|
     original  = io.download
     size_1280 = resize_to_limit!(original, 1280, 1280) { |cmd| cmd.auto_orient } # orient rotated images

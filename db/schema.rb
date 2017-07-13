@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170713140323) do
+ActiveRecord::Schema.define(version: 20170713180637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,8 @@ ActiveRecord::Schema.define(version: 20170713140323) do
     t.text     "description"
     t.string   "content_type"
     t.text     "file_data"
+    t.text     "file_signature"
+    t.index ["file_signature"], name: "index_subjects_on_file_signature", unique: true, using: :btree
     t.index ["slug"], name: "index_subjects_on_slug", unique: true, using: :btree
   end
 

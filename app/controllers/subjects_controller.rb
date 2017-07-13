@@ -42,30 +42,22 @@ class SubjectsController < ApplicationController
   def create
     file = subject_params[:file].class == Array ? subject_params[:file].first : subject_params[:file]
     media_type = media_type_for(content_type_for(file.tempfile), file.content_type)
-
     @subject = media_type.constantize.new
+    if @subject.class.name.in?(Subject.types)
+      @subject.file = file
+      @subject.content_type = file.content_type 
+    end
 
     respond_to do |format|
-      if @subject.class.name != 'Subject' 
-        @subject.file = file
-        @subject.content_type = file.content_type
-        @subject.file_copyright = current_user.name if @subject.file_copyright.blank?
-        @subject.file_copyright_details = 'CC BY-NC-SA 4.0' if @subject.file_copyright_details.blank?
-        
-        if @subject.save
-          format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
-          format.json { render :show, status: :created, location: @subject }
-          format.js
-        else
-          format.html { render :new }
-          format.json { render json: @subject.errors, status: :unprocessable_entity }
-          format.js
-        end
+      if @subject.save
+        format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
+        format.json { render :show, status: :created, location: @subject }
+        format.js
       else
-        output = {files: [{name: file.original_filename, size: 0, error: 'Filetype not allowed'}]}
-        # hier wird an ams weiter geleitet und NULL gerendert. Das falsch.
+        error = {files: [{status: :unprocessable_entity, name: file.original_filename, size: 0, error: @subject.errors.messages.map{|k,v| "#{k} #{v.join}"}.join(', ')}]}
         format.html { render :new }
-        format.json { render json: output, status: :unsupported_media_type }
+        format.json { render json: error }
+        format.js
       end
     end
   end
@@ -74,9 +66,10 @@ class SubjectsController < ApplicationController
   # PATCH/PUT /subjects/1
   # PATCH/PUT /subjects/1.json
   def update
+    # should validate that content_type still is in @subject.class
     respond_to do |format|
       if @subject.update(subject_params)
-        format.html { redirect_to @subject, notice: 'Subject was successfully updated. #{notice}' }
+        format.html { redirect_to @subject, notice: 'Subject was successfully updated.' }
         format.json { render :show, status: :ok, location: @subject }
       else
         format.html { render :edit }
@@ -124,7 +117,7 @@ class SubjectsController < ApplicationController
       else
         type = fs.present? ? media_type_for(fs) : 'Subject'
       end
-      type if Subject.types.include?(type)
+      type if Subject.types.include?(type) || type == 'Subject'
     end
 
     def content_type_for(tmpfile)
@@ -144,6 +137,6 @@ class SubjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_params
-      params.require(:subject).permit(:name, :description, :file, :file_copyright, :file_copyright_details, :tag_list => [], :file => [])
+      params.require(type.underscore.to_sym).permit(:name, :description, :file, :file_copyright, :file_copyright_details, :tag_list => [], :file => [])
     end
 end
