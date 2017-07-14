@@ -1,4 +1,9 @@
+<% if local_assigns[:full] %>
+  <iframe src="http://docs.google.com/gview?url=<%= "#{Rails.application.secrets.host}#{document.file_url}" %>&embedded=true" 
+  style="width:100%; height:500px;" frameborder="0"></iframe>
+<% end %>
 <%= link_to 'object', document.file_url %>
+
 
 <% if local_assigns[:full] %>
   <div class="">

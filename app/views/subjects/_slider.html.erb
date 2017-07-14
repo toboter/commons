@@ -7,32 +7,26 @@
           <%= link_to fa_icon('clipboard'), 'javascript:;', class: 'btn btn-default clipboard-btn', data: {'clipboard-target': "#subject-url-input"} %>
         </span>
       </div>
-
-      <%= content_tag :h3, link_to(subject.name, subject) %>
-
-      <%= render subject, as: subject.type.to_sym, full: false %>
-
       <div class="panel panel-default" style="margin-top:10px;">
         <div class="panel-body">
           <p><%= render_type_symbol(subject) %> <span class="text-muted"><strong><%= subject.content_type %></strong></span></p>
           <p>
             <strong>Title:</strong>
-            <%= subject.name %>
+            <%= link_to(subject.name, subject) %>
           </p>
+
+          <%= link_to subject do %>
+            <%= render subject, as: subject.type.to_sym, full: false %>
+          <% end %>
+          <%= content_tag :div, style: 'padding-top:10px;' do %>
+            <%= content_tag :p, content_tag(:strong, 'Copyright: ')+content_tag(:span, !subject.file_copyright.blank? ? subject.file_copyright : 'Unknown') %>
+            <%= content_tag :p, content_tag(:strong, 'Copyright Details: ')+content_tag(:span, subject.file_copyright_details) if subject.file_copyright_details.present? %>
+            <%= content_tag :p, 'Please respect the copyright.', class: 'text-muted small' %>
+          <% end %>
         </div>
       </div>
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <p>
-            <strong>Copyright:</strong>
-            <%= subject.file_copyright %>
-          </p>
-          <p>
-            <strong>Copyright Details:</strong>
-            <%= subject.file_copyright_details %>
-          </p>
-        </div>
-      </div>
+
+
       <%= link_to fa_icon('edit', text: 'Edit'), [:edit, subject], class: 'btn btn-sm btn-warning pull-right', style: 'margin-top: 5px;' %>
     <% end %>
   </div>

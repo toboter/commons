@@ -1,4 +1,4 @@
-<%= video_tag video.file_url(:original), poster: video.file_url(:size_640), controls: true %>
+<%= video_tag video.file_url(:original), poster: video.file_url(:size_640), controls: true, class: 'img-responsive' %>
 
 <% if local_assigns[:full] %>
   <div class="">

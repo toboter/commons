@@ -62,6 +62,7 @@ gem 'acts-as-taggable-on', '~> 4.0'
 gem 'browser'
 gem 'cancancan', '~> 1.10'
 gem 'clipboard-rails'
+gem 'best_in_place', '~> 3.0.1'
 
 # Auth & Babili
 # gem 'marduk', path: '/home/tschmidt/dev/babylon/gem_dev/marduk'

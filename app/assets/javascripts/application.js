@@ -20,11 +20,15 @@
 //= require bootstrap-markdown-bundle
 //= require jquery-fileupload
 //= require clipboard
+//= require best_in_place
 //= require turbolinks
 //= require turbolinks-compatibility
 //= require_tree .
 
 $(document).ready(function() {
+
+  // Activating Best In Place
+  jQuery(".best_in_place").best_in_place();
 
   // Tooltip
   $('.clipboard-btn').tooltip({

@@ -50,84 +50,23 @@ body {
     margin: 0 auto;
 }
 
-
-.portfolio-box {
-  position: relative;
-  display: block;
-  max-width: 650px;
-  margin: 0 auto;
-}
-.portfolio-box .portfolio-box-caption {
-  color: white;
-  opacity: 0;
-  display: block;
-  background: rgba(240, 95, 64, 0.9);
-  position: absolute;
-  bottom: 0;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  -webkit-transition: all 0.35s;
-  -moz-transition: all 0.35s;
-  transition: all 0.35s;
-}
-.portfolio-box .portfolio-box-caption .portfolio-box-caption-content {
-  width: 100%;
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category,
-.portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
-  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
-  padding: 0 15px;
-}
-.portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category {
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 14px;
-}
-.portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
-  font-size: 18px;
-}
-.portfolio-box:hover .portfolio-box-caption {
-  opacity: 1;
-}
-.portfolio-box:focus {
-  outline: none;
-}
-
-.portfolio-box-caption a {
-  color: white;
-}
-
-.portfolio-box-caption a:hover {
-  color: #e8e8e8;
-}
-
-.portfolio-box-caption a.edit {
-  float: left;
-  margin: 7px;
-}
-
-.portfolio-box-caption a.remove {
-  float: right;
-  margin: 7px;
-}
-
-@media (min-width: 768px) {
-  .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category {
-    font-size: 16px;
-  }
-  .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
-    font-size: 22px;
+.edit-subject-tags {
+  .form-group {
+    margin-bottom: 0;
   }
 }
-.call-to-action h2 {
-  margin: 0 auto 20px;
-}
-.no-gutter > [class*='col-'] {
-  padding-right: 0;
-  padding-left: 0;
+
+.tag-cloud {
+    .css1 {
+        font-size: 1.0em;
+    }
+    .css2 {
+        font-size: 1.2em;
+    }
+    .css3 {
+        font-size: 1.4em;
+    }
+    .css4 {
+        font-size: 1.6em;
+    }
 }

@@ -16,8 +16,7 @@
       <div class="panel-body">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-          <%= content_tag :li, link_to('Identity', '#identity', aria: {controls: 'identity'}, role: 'tab', data: {toggle: 'tab'}), role: 'presentation', class: 'active' %>
-          <%= content_tag :li, link_to('Content', '#content', aria: {controls: 'content'}, role: 'tab', data: {toggle: 'tab'}), role: 'presentation' %>
+          <%= content_tag :li, link_to('Description', '#identity', aria: {controls: 'identity'}, role: 'tab', data: {toggle: 'tab'}), role: 'presentation', class: 'active' %>
           <%= content_tag :li, link_to("Comments <span class='badge'>#{@subject.root_comments.count}</span>".html_safe, '#comments', aria: {controls: 'comments'}, role: 'tab', data: {toggle: 'tab'}), role: 'presentation', class: '' %>
           <%= content_tag :li, link_to(fa_icon('share-alt', text: "Sharing"), '#sharing', aria: {controls: 'sharing'}, role: 'tab', data: {toggle: 'tab'}), role: 'presentation', class: '' %>
         </ul>
@@ -36,22 +35,43 @@
                 <p><%= render_type_symbol(@subject) %> <span class="text-muted"><strong><%= @subject.content_type %></strong></span></p>
                 <p>
                   <strong>Title:</strong>
-                  <%= @subject.name %>
+                  <%= best_in_place @subject, :name, 
+                        as: :input,
+                        inner_class: 'form-control' %>
                 </p>
-              </div>
-            </div>
+                <p>
+                  <strong>Description:</strong>
+                  <%= best_in_place @subject, :description, 
+                        as: :textarea, 
+                        ok_button: 'Save', 
+                        cancel_button: 'Cancel', 
+                        place_holder: '<i>click to add.</i>',
+                        ok_button_class: 'btn btn-primary btn-sm',
+                        cancel_button_class: 'btn btn-default btn-sm',
+                        inner_class: 'form-control' %>
+                </p>
 
-            <div class="panel panel-default">
-              <div class="panel-body">
+                <hr>
+
                 <p>
                   <strong>Copyright:</strong>
-                  <%= @subject.file_copyright %> (linkto)<br>
-                  <small>If linkto in people Disclaimer</small>
+                  <%= best_in_place @subject, :file_copyright, 
+                        as: :input,
+                        inner_class: 'form-control', 
+                        place_holder: '<i>click to add.</i>' %>
                 </p>
                 <p>
                   <strong>Copyright Details:</strong>
-                  <%= @subject.file_copyright_details %>
+                  <%= best_in_place @subject, :file_copyright_details, 
+                        as: :input,
+                        inner_class: 'form-control', 
+                        place_holder: '<i>click to add.</i>' %>
                 </p>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <%= render 'edit_tags', subject: @subject%>
               </div>
             </div>
 
@@ -81,17 +101,6 @@
               <% end %>
             </ul>
             
-          <% end %>
-
-          <%= content_tag :div, id: 'content', role: 'tabpanel', class: 'tab-pane' do %>
-            <p>
-              <strong>Description:</strong>
-              <%= @subject.description %>
-            </p>  
-            <p>
-              <strong>Tags:</strong>
-              <%= @subject.tags.map{|c| content_tag :span, link_to(c.name, subjects_path(q: "#{c.name}"), style: 'color: white;'), class: 'label label-default'}.join(' ').html_safe %>
-            </p>
           <% end %>
 
           <%= content_tag :div, id: 'comments', role: 'tabpanel', class: 'tab-pane' do %>
