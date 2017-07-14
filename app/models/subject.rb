@@ -13,6 +13,10 @@ class Subject < ApplicationRecord
   validates :type, :name, :file_data, presence: true
   validates :file_signature, uniqueness: true
 
+  def file_list=(names)
+    self.tag_list = names
+  end
+
   def self.types
     %w(Image Audio Video Document)
   end

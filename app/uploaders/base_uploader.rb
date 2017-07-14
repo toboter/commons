@@ -7,7 +7,7 @@ class BaseUploader < Shrine
   plugin :determine_mime_type
   plugin :add_metadata
   plugin :metadata_attributes 
-  Attacher.metadata_attributes :copyright => :copyright, :md5 => :signature
+  Attacher.metadata_attributes :copyright => :copyright, :md5 => :signature, :keywords => :list
   
   add_metadata do |io, context|
     e = Exiftool.new(io.path)
