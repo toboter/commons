@@ -27,7 +27,7 @@
       </div>
 
 
-      <%= link_to fa_icon('edit', text: 'Edit'), [:edit, subject], class: 'btn btn-sm btn-warning pull-right', style: 'margin-top: 5px;' %>
+      <%= link_to fa_icon('edit', text: 'Edit'), [:edit, subject], class: 'btn btn-sm btn-warning pull-right', style: 'margin-top: 5px;' if can? :edit, subject %>
     <% end %>
   </div>
 </div>

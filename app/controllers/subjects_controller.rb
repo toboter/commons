@@ -2,11 +2,10 @@ class SubjectsController < ApplicationController
   # bug in fileupload fires get request for [object Object]
   before_action :set_type, except: [:new, :create]
   before_action :set_subject, only: [:show, :edit, :update, :destroy]
-  before_action :authorize, except: [:index, :show]
 
-  # load_and_authorize_resource
-  # skip_load_resource only: :index
-  # skip_authorize_resource only: :index
+  load_and_authorize_resource
+  skip_load_resource only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  skip_authorize_resource only: :index
 
 
   # GET /subjects

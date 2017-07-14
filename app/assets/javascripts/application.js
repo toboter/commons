@@ -68,14 +68,13 @@ $(document).ready(function() {
     tokenSeparators: [','],
     theme: "bootstrap"
   });
-  $("#tag_search").select2({
-    placeholder: "Select tags (separate by comma, search by enter)",
-    tokenSeparators: [','],
-    theme: "bootstrap"
+
+  $("select").on("select2:select", function(evt) {
+      var element = evt.params.data.element;
+      var $element = $(element);
+      $element.detach();
+      $(this).append($element);
+      $(this).trigger("change");
   });
-  $('.select2-selection').on('keyup', function (e) {
-    if (e.keyCode === 13) {
-      $(this).closest('form').submit();
-    }
-  });
+
 });

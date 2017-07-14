@@ -1,6 +1,6 @@
 <%= content_tag :div, id: "edit_subject_#{subject.id}_tags" do %> 
   <strong>Tags: </strong><br>
-  <% if current_user %>
+  <% if can? :edit, subject %>
     <%= simple_form_for(subject, remote: true, html: {id: "edit_subject_#{subject.id}_tags_form", class: 'edit-subject-tags'}) do |f| %>
       <%= f.error_notification %>
       <%= f.input :tag_list, label: false, collection: ActsAsTaggableOn::Tag.order(name: :asc), label_method: :name, 

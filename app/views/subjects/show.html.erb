@@ -1,8 +1,8 @@
 <% title "File: #{@subject.name}" %>
 
 <% content_for(:buttons) do %>
-  <%= link_to fa_icon('edit', text: 'Edit'), [:edit, @subject], class: 'btn btn-warning' %>
-  <%= link_to fa_icon('remove', text: 'Delete'), @subject, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+  <%= link_to fa_icon('edit', text: 'Edit'), [:edit, @subject], class: 'btn btn-warning' if can? :edit, @subject %>
+  <%= link_to fa_icon('remove', text: 'Delete'), @subject, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' if can? :destroy, @subject %>
 <% end if current_user %>
 
 
@@ -35,13 +35,13 @@
                 <p><%= render_type_symbol(@subject) %> <span class="text-muted"><strong><%= @subject.content_type %></strong></span></p>
                 <p>
                   <strong>Title:</strong>
-                  <%= best_in_place @subject, :name, 
+                  <%= best_in_place_if can?(:edit, @subject), @subject, :name, 
                         as: :input,
                         inner_class: 'form-control' %>
                 </p>
                 <p>
                   <strong>Description:</strong>
-                  <%= best_in_place @subject, :description, 
+                  <%= best_in_place_if can?(:edit, @subject), @subject, :description, 
                         as: :textarea, 
                         ok_button: 'Save', 
                         cancel_button: 'Cancel', 
@@ -55,14 +55,14 @@
 
                 <p>
                   <strong>Copyright:</strong>
-                  <%= best_in_place @subject, :file_copyright, 
+                  <%= best_in_place_if can?(:edit, @subject), @subject, :file_copyright, 
                         as: :input,
                         inner_class: 'form-control', 
                         place_holder: '<i>click to add.</i>' %>
                 </p>
                 <p>
                   <strong>Copyright Details:</strong>
-                  <%= best_in_place @subject, :file_copyright_details, 
+                  <%= best_in_place_if can?(:edit, @subject), @subject, :file_copyright_details, 
                         as: :input,
                         inner_class: 'form-control', 
                         place_holder: '<i>click to add.</i>' %>
