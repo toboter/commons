@@ -15,9 +15,8 @@
             <%= link_to(subject.name, subject) %>
           </p>
 
-          <%= link_to subject do %>
-            <%= render subject, as: subject.type.to_sym, full: false %>
-          <% end %>
+          <%= render subject, as: subject.type.to_sym, full: false %>
+          
           <%= content_tag :div, style: 'padding-top:10px;' do %>
             <%= content_tag :p, content_tag(:strong, 'Copyright: ')+content_tag(:span, !subject.file_copyright.blank? ? subject.file_copyright : 'Unknown') %>
             <%= content_tag :p, content_tag(:strong, 'Copyright Details: ')+content_tag(:span, subject.file_copyright_details) if subject.file_copyright_details.present? %>

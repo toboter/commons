@@ -63,6 +63,7 @@ gem 'browser'
 gem 'cancancan', '~> 1.10'
 gem 'clipboard-rails'
 gem 'best_in_place', '~> 3.0.1'
+gem 'magnific-popup-rails', '~> 1.1.0'
 
 # Auth & Babili
 # gem 'marduk', path: '/home/tschmidt/dev/babylon/gem_dev/marduk'

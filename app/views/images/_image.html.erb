@@ -1,7 +1,9 @@
-<%= image_tag image.file_url(local_assigns[:full] ? :size_1280 : :size_640), class: 'img-responsive', style: 'width:100%;' %>
+<%= link_to image.file_url(:size_1280), class: 'lightbox-link' do %>
+  <%= image_tag image.file_url(local_assigns[:full] ? :size_1280 : :size_640), class: 'img-responsive', style: 'width:100%;' %>
+<% end %>
 
 <% if local_assigns[:full] %>
-  <div class="">
+  <div class="" style="margin-top:30px;">
     <h4>Metadata of the original file</h4>
     <table class="table table-bordered">
       <tbody>
