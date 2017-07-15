@@ -100,4 +100,32 @@ $(document).ready(function() {
       $(this).trigger("change");
   });
 
+  // Clickable table rows
+  $(function(){
+      $('.table tr[data-href]').each(function(){
+          $(this).css('cursor','pointer').hover(
+              function(){ 
+                  $(this).addClass('active'); 
+              },  
+              function(){ 
+                  $(this).removeClass('active'); 
+              }).click( function(){ 
+                if ( $(this).attr('data-remote') ) 
+                {
+                    $.ajax({
+                      url: $(this).attr('data-href'),
+                      dataType: 'script',
+                      type: "GET"
+                    }); 
+                }
+                else
+                {
+                  document.location = $(this).attr('data-href');
+                }
+                end
+              }
+          );
+      });
+  });
+
 });

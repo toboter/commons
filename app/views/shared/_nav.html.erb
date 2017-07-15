@@ -1,5 +1,7 @@
-<%= content_tag :li, link_to('Subjects', subjects_path), class: ('active' if @subjects.present?) %>
+<%= content_tag :li, link_to(fa_icon('file', text: 'All files'), subjects_path), class: ('active' if @subjects.present?) %>
 <%= content_tag :li, link_to('Recently added', subjects_path), class: 'disabled' %>
+<%= content_tag :li, link_to('Published files', subjects_path), class: 'disabled' %>
+<%= content_tag :li, link_to(fa_icon('share-alt', text: 'Shared with you only'), subjects_path), class: 'disabled' %>
 <hr>
 <%= content_tag :li, link_to('API', api_path), class: ('active' if current_page?(api_url)) %>
 <%= content_tag :li, link_to('Help', help_path), class: ('active' if current_page?(help_path)) %></li>

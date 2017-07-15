@@ -6,21 +6,34 @@
 
 
 <% if local_assigns[:full] %>
-  <div class="">
-    <h4>Metadata of the original file</h4>
-    <table class="table table-bordered">
-      <tbody>
-        <% document.file.metadata.each do |key, value| %>
-          <tr>
-            <td>
-              <%= key.humanize %>
-            </td>
-            <td>
-              <%= value %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false" style="margin-top:10px;">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="typeFilterHeading">
+        <h4 class="panel-title">
+          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#typeFilter" aria-expanded="false" aria-controls="typeFilter">
+            <span class="caret"></span>
+            Metadata of the original file
+          </a>
+        </h4>
+      </div>
+      <div id="typeFilter" class="panel-collapse collapse" role="tabpanel" aria-labelledby="typeFilterHeading">
+        <div class="panel-body">
+          <table class="table table-bordered">
+            <tbody>
+              <% document.file.metadata.each do |key, value| %>
+                <tr>
+                  <td>
+                    <%= key.humanize %>
+                  </td>
+                  <td>
+                    <%= value %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>

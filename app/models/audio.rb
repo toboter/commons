@@ -6,7 +6,7 @@ class Audio < Subject
   end
 
   filterrific(
-    default_filter_params: { sorted_by: 'created_at_desc' },
+    default_filter_params: { sorted_by: 'modified_desc' },
     available_filters: [
       :sorted_by,
       :search
@@ -23,8 +23,8 @@ class Audio < Subject
     case sort_option.to_s
     when /^name_/
       order("LOWER(subjects.name) #{ direction }")
-    when /^created_at_/
-      order("subjects.created_at #{ direction }")
+    when /^modified_/
+      order("subjects.updated_at #{ direction }")
     else
       raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
     end
@@ -34,8 +34,8 @@ class Audio < Subject
     [
       ['Name (a-z)', 'name_asc'],
       ['Name (z-a)', 'name_desc'],
-      ['Oldest first', 'created_at_asc'],
-      ['Newest first', 'created_at_desc']
+      ['Oldest first', 'modified_asc'],
+      ['Newest first', 'modified_desc']
     ]
   end
   

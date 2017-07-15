@@ -1,12 +1,6 @@
-<%= link_to subject, remote: !browser.device.mobile?, class: "list-group-item", id: "subject-results-list-group-item-#{subject.id}" do %>
-  <div class="media-left">
-    <%= render_thumb(subject, 40) %>
-  </div>
-  <div class="media-body">
-    <h4 class="media-heading"><%= subject.name %></h4>
-    <%= render_type_symbol(subject) %>
-  </div>
-  <div class="media-right">
-    <%= content_tag :span, fa_icon('star'), class: 'pull-right' if subject.recently_added %>
-  </div>
-<% end %>
+  <td><%= render_thumb(subject, 40) %></td>
+  <td><%= subject.name %></td>
+  <td><%= link_to '...', subject, remote: !browser.device.mobile?, class: "", id: "subject-results-list-group-item-#{subject.id}" %></td>
+  <td><%= render_type_symbol(subject) %></td>
+  <td class="small text-muted"><%= number_to_human_size(subject.file.is_a?(Hash) ? subject.file[:original].size : subject.file.size) %></td>
+  <td class="small text-muted"><%= time_ago_in_words(subject.updated_at) %> ago</td>

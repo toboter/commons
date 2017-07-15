@@ -4,11 +4,27 @@
     <%= share_multiple_with(Subject) %>
   </div>
 
-  <div class="list-group" id="subject-results-list-group">
-    <% subjects.each do |subject| %>
-      <%= render(partial: 'subjects/list_item', locals: { subject: subject }) %>
-    <% end %>
-  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <td></td>
+        <td><%= filterrific_sorting_link(@filterrific, :name) %></td>
+        <td></td>
+        <td></td>
+        <td>Size</td>
+        <td><%= filterrific_sorting_link(@filterrific, :modified) %></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% subjects.each do |subject| %>
+        <%= content_tag :tr, 
+              render(partial: 'subjects/list_item', locals: { subject: subject }), 
+              data: { 
+                href: url_for(subject),
+                remote: !browser.device.mobile? } %>
+      <% end %>      
+    </tbody>
+  </table>
   
   <div id="pagination-results">
     <%= will_paginate subjects, params: params.merge({filterrific: nil}), renderer: BootstrapPagination::Rails %>
