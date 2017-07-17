@@ -5,6 +5,7 @@ class Subject < ApplicationRecord
   include SearchCop
 
   before_validation :set_default_name, on: :create
+  after_validation :set_local_tags
 
   self.inheritance_column = :type
   friendly_id :obfuscated_id, use: :slugged
@@ -25,13 +26,32 @@ class Subject < ApplicationRecord
     default_filter_params: { sorted_by: 'modified_desc' },
     available_filters: [
       :sorted_by,
-      :search
+      :search,
+      :with_published_records,
+      :with_unshared_records,
+      :with_user_shared_to_like
     ]
   )
 
+  scope :with_published_records, lambda { |flag|
+    return nil  if 0 == flag # checkbox unchecked
+    published_records
+  }
+
+  scope :with_unshared_records, lambda { |flag|
+    return nil  if 0 == flag # checkbox unchecked
+    inaccessible_records
+  }
+
+  scope :with_user_shared_to_like, lambda { |user_id|
+    user = User.find(user_id)
+    accessible_by_records(user)
+  }
+
   search_scope :search do
-    attributes :name, :type
-    attributes :tag => "tags.name" # verbunden mit AND suchen
+    attributes :name, :type, :description, :file_copyright
+    attributes :modified => "updated_at"
+    attributes :tags => "local_tags"
   end
 
   scope :sorted_by, lambda { |sort_option|
@@ -70,5 +90,8 @@ class Subject < ApplicationRecord
     self.name = try(:file).try(:original_filename) || nil
   end
 
+  def set_local_tags
+    self.local_tags = tag_list.join(', ')
+  end
  
 end

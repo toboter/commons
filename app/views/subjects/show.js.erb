@@ -1,2 +1,8 @@
 $('#show-target').empty();
 $('#show-target').append('<%= j render(partial: 'slider', locals: {subject: @subject}) %>');
+
+  $("#tag_names").select2({
+    tags: true,
+    tokenSeparators: [','],
+    theme: "bootstrap"
+  });

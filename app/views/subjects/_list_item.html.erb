@@ -1,5 +1,5 @@
   <td><%= render_thumb(subject, 40) %></td>
-  <td><%= subject.name %></td>
+  <td><%= best_in_place_if can?(:edit, subject), subject, :name %></td>
   <td><%= link_to '...', subject, remote: !browser.device.mobile?, class: "", id: "subject-results-list-group-item-#{subject.id}" %></td>
   <td><%= render_type_symbol(subject) %></td>
   <td class="small text-muted"><%= number_to_human_size(subject.file.is_a?(Hash) ? subject.file[:original].size : subject.file.size) %></td>

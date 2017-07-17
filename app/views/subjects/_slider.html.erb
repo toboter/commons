@@ -18,15 +18,15 @@
           <%= render subject, as: subject.type.to_sym, full: false %>
           
           <%= content_tag :div, style: 'padding-top:10px;' do %>
-            <%= content_tag :p, content_tag(:strong, 'Copyright: ')+content_tag(:span, !subject.file_copyright.blank? ? subject.file_copyright : 'Unknown') %>
+            <%= content_tag :p, content_tag(:strong, 'Copyright: ')+content_tag(:span, best_in_place_if(can?(:edit, subject), subject, :file_copyright)) %>
             <%= content_tag :p, content_tag(:strong, 'Copyright Details: ')+content_tag(:span, subject.file_copyright_details) if subject.file_copyright_details.present? %>
             <%= content_tag :p, 'Please respect the copyright.', class: 'text-muted small' %>
           <% end %>
+
+          <%= render 'edit_tags', subject: subject if can? :edit, subject%>
         </div>
       </div>
-
-
-      <%= link_to fa_icon('edit', text: 'Edit'), [:edit, subject], class: 'btn btn-sm btn-warning pull-right', style: 'margin-top: 5px;' if can? :edit, subject %>
     <% end %>
   </div>
 </div>
+

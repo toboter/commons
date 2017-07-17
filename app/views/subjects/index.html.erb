@@ -1,17 +1,14 @@
 <% title "Subjects", false %>
-
 <div class="row">
   <div class="col-md-12" style="margin:10px 0;">
     <%= form_for_filterrific @filterrific do |f| %>
       <div class="form-inline row">
-        <div class="form-group col-md-8 col-sm-8">
+        <div class="form-group col-md-12 col-sm-12">
           <div class="input-group" style="width:100%">
-            <span class="input-group-addon" style="width:38px;"><%= link_to fa_icon('search'), help_path(anchor: 'searching') %></span>
+            <span class="input-group-addon" style="width:38px;"><%= fa_icon('search') %></span>
             <%= f.search_field(:search, placeholder: "Search in all fields", class: 'filterrific-periodically-observed form-control', style: '') %>
+            <span class="input-group-addon" style="width:38px;"><%= link_to fa_icon('info'), help_path(anchor: 'searching') %></span>
           </div>
-        </div>
-        <div class="form-group col-md-3 col-md-offset-1 col-sm-3 col-sm-offset-1">
-          <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by], {}, { class: 'form-control pull-right' }) %>
         </div>
       </div>
     <% end %> <!-- filterrific form end -->
