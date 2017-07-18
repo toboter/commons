@@ -30,7 +30,7 @@ class CommonSerializer < ActiveModel::Serializer
     if object.file.is_a?(Hash)
       object.file.each do |key, version|
         files << {
-            key => {
+            key.to_sym => {
               url: "#{Rails.application.secrets.host}#{version.url}",
               size: number_to_human_size(version.size)
             }
@@ -43,7 +43,7 @@ class CommonSerializer < ActiveModel::Serializer
           }
       }
     end
-    files.flatten
+    files.reduce({}, :merge)
   end
    
 end
