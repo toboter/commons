@@ -5,7 +5,7 @@ class ImageUploader < BaseUploader
   plugin :versions
   
   process(:store) do |io, context|
-    original  = io.download
+    original  = convert(io.download, "jpg")
     size_1280 = resize_to_limit!(original, 1280, 1280) { |cmd| cmd.auto_orient } # orient rotated images
     size_640  = resize_to_limit(size_1280,  640, 640)
     size_320  = resize_to_limit(size_640,  320, 320)
