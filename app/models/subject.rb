@@ -51,7 +51,7 @@ class Subject < ApplicationRecord
   search_scope :search do
     attributes :name, :type, :description, :file_copyright
     attributes :modified => "updated_at"
-    attributes :tags => "local_tags"
+    attributes :tag => "local_tags"
   end
 
   scope :sorted_by, lambda { |sort_option|

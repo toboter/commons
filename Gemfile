@@ -80,6 +80,10 @@ gem 'rails-bootstrap-markdown'
 gem 'closure_tree'
 
 # needs ffmpeg, imagemagick, libmagic-dev, apache-tika
+# gem install ruby-filemagic -v '0.7.2'
+# sudo apt-get install libmagic-dev
+# sudo apt-get install ffmpeg
+
 gem "ruby-filemagic"            # Content negotiation
 gem "mimemagic"                 # Content negotiation
 gem 'exiftool_vendored'         # Metadata extraction
