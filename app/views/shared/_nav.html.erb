@@ -4,8 +4,8 @@
   <%= content_tag :li, link_to(fa_icon('file', text: 'All files'), subjects_path), class: ('active' if @subjects.present? && params['filterrific'].blank? ) %>
 <% end %>
 
-<%= content_tag :li, link_to(fa_icon('share-alt', text: 'Published files'), subjects_path('filterrific[with_published_records]': "true")), class: ('active' if params['filterrific'] && params['filterrific']['with_published_records']) %>
-<%= content_tag :li, link_to(fa_icon('share-alt', text: 'Unshared files'), subjects_path('filterrific[with_unshared_records]': "true")), class: ('active' if params['filterrific'] && params['filterrific']['with_unshared_records']) %>
+<%= content_tag :li, link_to(fa_icon('share-alt', text: 'Published files'), subjects_path('filterrific[with_published_records]': "true")), class: ('active' if params['filterrific'] && params['filterrific']['with_published_records']) if current_user %>
+<%= content_tag :li, link_to(fa_icon('share-alt', text: 'Unshared files'), subjects_path('filterrific[with_unshared_records]': "true")), class: ('active' if params['filterrific'] && params['filterrific']['with_unshared_records']) if current_user %>
 <hr>
 <%= content_tag :li, link_to('API', api_path), class: ('active' if current_page?(api_url)) %>
 <%= content_tag :li, link_to('Help', help_path), class: ('active' if current_page?(help_path)) %>
