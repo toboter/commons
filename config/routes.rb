@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   end
   # 'concerns: :commentable' needs to be added to any resource where nabu is included.
 
-  resources :subjects, only: [:index, :new, :create]
+  resources :subjects, only: [:index, :new, :create] do
+    member do
+      get "file", to: "subjects#view_file"
+    end
+  end
 
   resources :audios, controller: 'audios', type: 'Audio', concerns: :commentable, except: [:index, :new, :create]
   resources :documents, controller: 'documents', type: 'Document', concerns: :commentable, except: [:index, :new, :create]

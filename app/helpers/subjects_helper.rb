@@ -2,7 +2,7 @@ module SubjectsHelper
 
   def render_thumb(subject, size=80)
     if subject.type == 'Image' || subject.type == 'Video'
-      image_tag subject.file_url("thumb_#{size.to_s}".to_sym)
+      image_tag file_subject_url(subject, version: "thumb_#{size.to_s}".to_sym)
     elsif subject.type == 'Audio'
       fa_icon('file-audio-o 3x')
     elsif subject.type == 'Document'

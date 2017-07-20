@@ -31,7 +31,7 @@ class CommonSerializer < ActiveModel::Serializer
       object.file.each do |key, version|
         files << {
             key.to_sym => {
-              url: "#{Rails.application.secrets.host}#{version.url}",
+              url: file_subject_url(object, version: key, host: Rails.application.secrets.host),
               size: number_to_human_size(version.size)
             }
         }
@@ -39,7 +39,7 @@ class CommonSerializer < ActiveModel::Serializer
     else
       files << {
           original: {
-            url: "#{Rails.application.secrets.host}#{object.file_url}"
+            url: file_subject_url(object, host: Rails.application.secrets.host)
           }
       }
     end

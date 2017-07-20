@@ -1,4 +1,4 @@
-<%= video_tag video.file_url(:original), poster: video.file_url(:size_640), controls: true, class: 'img-responsive' %>
+<%= video_tag file_subject_url(video, version: :original), poster: file_subject_url(video, version: :size_640), controls: true, class: 'img-responsive' %>
 
 <% if local_assigns[:full] %>
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false" style="margin-top:10px;">

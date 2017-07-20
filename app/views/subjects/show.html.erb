@@ -83,22 +83,22 @@
               <% if @subject.file.is_a?(Hash) %>
                 <% @subject.file.each do |key, version| %>
                   <li class="list-group-item">
-                    <%= link_to fa_icon('clipboard'), 'javascript:;', class: 'clipboard-btn', data: {'clipboard-action': 'copy', 'clipboard-text': "#{Rails.application.secrets.host}#{version.url}" }%>
+                    <%= link_to fa_icon('clipboard'), 'javascript:;', class: 'clipboard-btn', data: {'clipboard-action': 'copy', 'clipboard-text': file_subject_url(@subject, version: key) }%>
                     <strong><%= key.to_s.humanize %></strong>
                     <span class="pull-right">
                       <%= content_tag :span, "#{version.width}x#{version.height} | ", class: 'text-muted small'  if version.try(:width) && version.try(:height) %>
                       <%= content_tag :span, number_to_human_size(version.size), class: 'text-muted small' %>
-                      <%= link_to fa_icon('download'), version.url, download: "#{key}_#{version.id}" %>
+                      <%= link_to fa_icon('download'), file_subject_url(@subject, version: key), download: "#{key}_#{version.id}" %>
                     </span>
                   </li>
                 <% end %>
               <% else %>
                 <li class="list-group-item">
-                  <%= link_to fa_icon('clipboard'), 'javascript:;', class: 'clipboard-btn', data: {'clipboard-action': 'copy', 'clipboard-text': "#{Rails.application.secrets.host}#{@subject.file_url}" }%>
+                  <%= link_to fa_icon('clipboard'), 'javascript:;', class: 'clipboard-btn', data: {'clipboard-action': 'copy', 'clipboard-text': file_subject_url(@subject) }%>
                   <strong>Original</strong>
                   <span class="pull-right">
                     <%= content_tag :span, number_to_human_size(@subject.file.size), class: 'text-muted small' %>
-                    <%= link_to fa_icon('download'), @subject.file_url, download: "#{@subject.file.id}" %>
+                    <%= link_to fa_icon('download'), file_subject_url(@subject, version: nil), download: "#{@subject.file.id}" %>
                   </span>
                 </li>
               <% end %>

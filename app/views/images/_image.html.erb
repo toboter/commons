@@ -1,5 +1,5 @@
-<%= link_to image.file_url(:size_1280), class: 'lightbox-link' do %>
-  <%= image_tag image.file_url(local_assigns[:full] ? :size_1280 : :size_640), class: 'img-responsive', style: 'width:100%;' %>
+<%= link_to file_subject_url(image, version: :size_1280), class: 'lightbox-link' do %>
+  <%= image_tag file_subject_url(image, version: (local_assigns[:full] ? :size_1280 : :size_640)), class: 'img-responsive', style: 'width:100%;' %>
 <% end %>
 
 <% if local_assigns[:full] %>

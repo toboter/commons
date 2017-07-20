@@ -6,7 +6,7 @@ class Ability
     #
     user ||= User.new # guest user (not logged in)
     if user
-      can :show, Subject, Subject do |s|
+      can [:show, :view_file], Subject, Subject do |s|
         s.readable_by?(user)
       end
       can [:edit, :update, :destroy], Subject, Subject do |s|
@@ -15,7 +15,7 @@ class Ability
       can [:new, :create], Subject if user.is_admin? || user.is_creator?
       
     else
-      can :read, Subject, published?: true
+      can [:read, :view_file], Subject, published?: true
     end
     
     #

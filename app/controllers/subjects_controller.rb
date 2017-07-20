@@ -1,10 +1,10 @@
 class SubjectsController < ApplicationController
   # bug in fileupload fires get request for [object Object]
   before_action :set_type, except: [:new, :create]
-  before_action :set_subject, only: [:show, :edit, :update, :destroy]
+  before_action :set_subject, only: [:show, :edit, :update, :destroy, :view_file]
 
   load_and_authorize_resource
-  skip_load_resource only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  skip_load_resource only: [:index, :show, :new, :create, :edit, :update, :destroy, :view_file]
   skip_authorize_resource only: :index
 
 
@@ -88,6 +88,22 @@ class SubjectsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+   def view_file
+     uploaded_file = @subject.file.is_a?(Hash) ? @subject.file.fetch(params[:version].to_sym) : @subject.file
+     # retrieve the Shrine::UploadedFile, assuming #file is the attachment name on Image model
+
+     headers["Content-Length"] = uploaded_file.size
+     headers["Content-Type"] = uploaded_file.mime_type
+     headers["Content-Disposition"] = "inline; filename=\"#{uploaded_file.original_filename}\""
+
+     self.response_body = Enumerator.new do |yielder|
+       yielder << uploaded_file.read(16*1024) until uploaded_file.eof?
+       uploaded_file.close
+     end
+   end
+
 
   private
     def set_type
