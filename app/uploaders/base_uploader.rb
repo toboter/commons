@@ -6,7 +6,9 @@ class BaseUploader < Shrine
   plugin :signature
   plugin :determine_mime_type
   plugin :add_metadata
-  plugin :metadata_attributes 
+  plugin :metadata_attributes
+  plugin :pretty_location
+
   Attacher.metadata_attributes :copyright => :copyright, :md5 => :signature, :keywords => :list
   
   add_metadata do |io, context|
@@ -14,5 +16,4 @@ class BaseUploader < Shrine
     file = e.to_hash
     file.merge!({md5: calculate_signature(io, :md5)})
   end
-
 end

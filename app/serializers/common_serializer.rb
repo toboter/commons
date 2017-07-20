@@ -31,7 +31,7 @@ class CommonSerializer < ActiveModel::Serializer
       object.file.each do |key, version|
         files << {
             key.to_sym => {
-              url: file_subject_url(object, version: key, host: Rails.application.secrets.host),
+              url: file_api_common_url(object, version: key, host: Rails.application.secrets.host),
               size: number_to_human_size(version.size)
             }
         }

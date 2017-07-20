@@ -22,6 +22,9 @@ Rails.application.routes.draw do
         collection do
           get 'search'
         end
+        member do
+          get "file", to: "commons#view_file"
+        end
       end  
     end
   end
