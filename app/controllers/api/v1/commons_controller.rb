@@ -16,6 +16,7 @@ class Api::V1::CommonsController < ActionController::API
     render json: Subject.visible_for(@user).search(params[:q]), each_serializer: CommonSerializer
   end
 
+  # +cors
   def view_file
     @subject = Subject.visible_for(@user).friendly.find(params[:id])
     uploaded_file = @subject.file.is_a?(Hash) ? @subject.file.fetch(params[:version].to_sym) : @subject.file

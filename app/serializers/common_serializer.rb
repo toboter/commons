@@ -2,13 +2,14 @@ class CommonSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
   include ActionView::Helpers::NumberHelper
   
-  attributes :type, :name, :content_type
+  attributes :type, :name, :content_type, :oid, :tags
   attributes :links
   attributes :file_copyright, :file_copyright_details
-  has_many :tags
-  attributes :tags
   attributes :files
 
+  def oid
+    object.slug
+  end
 
   def type
     object.type
@@ -22,7 +23,7 @@ class CommonSerializer < ActiveModel::Serializer
   end
 
   def tags
-    object.tags.map{|c| c.name}.join(', ')
+    object.local_tags
   end
   
   def files
@@ -32,14 +33,16 @@ class CommonSerializer < ActiveModel::Serializer
         files << {
             key.to_sym => {
               url: file_api_common_url(object, version: key, host: Rails.application.secrets.host),
-              size: number_to_human_size(version.size)
+              size: number_to_human_size(version.size),
+              content_type: version.content_type
             }
         }
       end
     else
       files << {
           original: {
-            url: file_subject_url(object, host: Rails.application.secrets.host)
+            url: file_subject_url(object, host: Rails.application.secrets.host),
+            content_type: object.content_type
           }
       }
     end

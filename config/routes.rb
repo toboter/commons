@@ -19,12 +19,8 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     scope module: :v1 do
       resources :commons, only: [:index, :show] do
-        collection do
-          get 'search'
-        end
-        member do
-          get "file", to: "commons#view_file"
-        end
+        get 'search', on: :collection
+        get "file", to: "commons#view_file", on: :member
       end  
     end
   end
