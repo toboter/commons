@@ -4,7 +4,7 @@
     <%= share_multiple_with(Subject) %>
   </div>
 
-  <div class="collapse" id="edit-multiple-subjects">
+  <%= content_tag :div, class: "collapse", id: "edit-multiple-subjects" do %>
     <div class="well">
       <%= simple_form_for :subject, 
             url: update_multiple_subjects_path, 
@@ -56,7 +56,7 @@
               class: 'btn btn-primary' %>
       <% end %>
     </div>
-  </div>
+  <% end if can_administrate? %>
 
 
   <table class="table table-hover">
