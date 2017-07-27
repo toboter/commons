@@ -86,7 +86,7 @@ $(document).ready(function() {
 
 
   // Select2
-  $("#tag_names").select2({
+  $(".tag_names").select2({
     tags: true,
     tokenSeparators: [','],
     theme: "bootstrap"

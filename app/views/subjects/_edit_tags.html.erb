@@ -4,7 +4,7 @@
     <%= simple_form_for(subject, remote: true, html: {id: "edit_subject_#{subject.id}_tags_form", class: 'edit-subject-tags'}) do |f| %>
       <%= f.error_notification %>
       <%= f.input :tag_list, label: false, collection: ActsAsTaggableOn::Tag.order(name: :asc), label_method: :name, 
-              value_method: :name, selected: subject.tag_list, input_html: {multiple: true, id: 'tag_names', class: 'form-control', style: 'width:100%'} %>
+              value_method: :name, selected: subject.tag_list, input_html: {multiple: true, class: 'tag_names form-control', style: 'width:100%'} %>
       <%= f.submit 'Save', class: 'btn btn-primary btn-sm' %>
     <% end %>
 

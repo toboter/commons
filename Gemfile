@@ -89,11 +89,16 @@ gem "ruby-filemagic"            # Content negotiation
 gem "mimemagic"                 # Content negotiation
 gem 'exiftool_vendored'         # Metadata extraction
 gem "streamio-ffmpeg"           # Video, Audio processing
+# https://github.com/yomurb/yomu
 # gem 'yomu'                    # Document extraction
 gem 'fastimage'                 # Image processing
 gem "mini_magick", ">= 4.3.5"   # Image processing
 gem "image_processing"          # Image processing
 gem "shrine"
 gem "jquery-fileupload-rails"
+
+# https://cloud.google.com/vision/
+# https://cloud.google.com/vision/docs/reference/libraries#client-libraries-install-ruby
+# gem "google-cloud-vision"
 
 ruby '2.3.1'

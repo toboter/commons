@@ -18,6 +18,14 @@ class Subject < ApplicationRecord
     self.tag_list = names
   end
 
+  def tag_add_list=(new_tags)
+    self.tag_list.add(new_tags, parse: true)
+  end
+
+  def tag_remove_list=(destroy_tags)
+    self.tag_list.remove(destroy_tags, parse: true)
+  end
+
   def self.types
     %w(Image Audio Video Document)
   end

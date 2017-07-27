@@ -4,7 +4,7 @@ class SubjectsController < ApplicationController
   before_action :set_subject, only: [:show, :edit, :update, :destroy, :view_file]
 
   load_and_authorize_resource
-  skip_load_resource only: [:index, :show, :new, :create, :edit, :update, :destroy, :view_file]
+  skip_load_resource only: [:index, :show, :new, :create, :edit, :update, :update_multiple, :destroy, :view_file]
   skip_authorize_resource only: :index
 
 
@@ -77,6 +77,15 @@ class SubjectsController < ApplicationController
         format.js
       end
     end
+  end
+
+  def update_multiple
+    @subjects = Subject.find(params[:subject_ids])
+    @subjects.each do |subject|
+      subject.update_attributes!(subject_params.reject { |k,v| v.blank? })
+    end
+    flash[:notice] = "Updated subjects!"
+    redirect_to subjects_path
   end
 
   # DELETE /subjects/1
@@ -154,6 +163,6 @@ class SubjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_params
-      params.require(type.underscore.to_sym).permit(:name, :description, :file, :file_copyright, :file_copyright_details, :tag_list => [], :file => [])
+      params.require(type.underscore.to_sym).permit(:name, :description, :file, :file_copyright, :file_copyright_details, :tag_list => [], :file => [], :tag_add_list => [], :tag_remove_list => [])
     end
 end

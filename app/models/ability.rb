@@ -12,6 +12,7 @@ class Ability
       can [:edit, :update, :destroy], Subject, Subject do |s|
         s.editable_by?(user)
       end
+      can :update_multiple, Subject if user.is_admin?
       can [:new, :create], Subject if user.is_admin? || user.is_creator?
       
     else

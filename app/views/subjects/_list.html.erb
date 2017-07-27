@@ -4,6 +4,61 @@
     <%= share_multiple_with(Subject) %>
   </div>
 
+  <div class="collapse" id="edit-multiple-subjects">
+    <div class="well">
+      <%= simple_form_for :subject, 
+            url: update_multiple_subjects_path, 
+            html: { 
+              method: :put, 
+              class: 'form-horizontal'
+            },
+            wrapper: :horizontal_form do |f| %>
+        <ul>
+          <% for subject in @subjects %>
+            <li>
+              <%= hidden_field_tag "subject_ids[]", subject.id %>
+              <%= subject.name %>
+            </li>
+          <% end %>
+        </ul>
+        <%= f.input :file_copyright, 
+              label: 'Copyright', 
+              required: false %>
+        <%= f.input :file_copyright_details, 
+              label: 'Copyright details', 
+              required: false %>
+        <%= f.input :description, 
+              required: false %>
+        <%= f.input :tag_add_list, 
+              collection: ActsAsTaggableOn::Tag.order(name: :asc), 
+              label_method: :name, 
+              value_method: :name, 
+              input_html: {
+                multiple: true, 
+                class: 'tag_names form-control',
+                style: 'width: 100%;'
+              }, 
+              label: 'Add tags', 
+              required: false %>
+        <%= f.input :tag_remove_list, 
+              collection: ActsAsTaggableOn::Tag.order(name: :asc), 
+              label_method: :name, 
+              value_method: :name, 
+              input_html: {
+                multiple: true, 
+                class: 'tag_names form-control',
+                style: 'width: 100%;'
+              }, 
+              label: 'Remove tags', 
+              required: false %>
+
+        <%= f.submit "Update all", 
+              class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+
+
   <table class="table table-hover">
     <thead>
       <tr>
@@ -18,15 +73,19 @@
     <tbody>
       <% subjects.each do |subject| %>
         <%= content_tag :tr, 
-              render(partial: 'subjects/list_item', locals: { subject: subject }), 
-              data: { 
-                href: url_for(subject),
-                remote: !browser.device.mobile? } %>
+              render(partial: 'subjects/list_item', 
+                locals: { subject: subject }), 
+                data: { 
+                  href: url_for(subject),
+                  remote: !browser.device.mobile? 
+                } %>
       <% end %>      
     </tbody>
   </table>
   
   <div id="pagination-results">
-    <%= will_paginate subjects, params: params.merge({filterrific: nil}), renderer: BootstrapPagination::Rails %>
+    <%= will_paginate subjects, 
+          params: params.merge({filterrific: nil}), 
+          renderer: BootstrapPagination::Rails %>
   </div>
 </div>

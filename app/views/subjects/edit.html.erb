@@ -11,7 +11,7 @@
     <%= f.input :description %>
     <%= f.input :tag_list, collection: ActsAsTaggableOn::Tag.order(name: :asc), label_method: :name, 
           value_method: :name, selected: @subject.tag_list, 
-          input_html: {multiple: true, id: 'tag_names'} %>
+          input_html: {multiple: true, class: 'tag_names'} %>
     
     <%= f.input :file_copyright %>
     <%= f.input :file_copyright_details %>
