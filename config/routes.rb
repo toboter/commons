@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   end
   # 'concerns: :commentable' needs to be added to any resource where nabu is included.
 
-  resources :subjects, only: [:index, :new, :create] do
+  resources :subjects, only: [:index, :new, :create], path: '/files' do
     get "file", to: "subjects#view_file", on: :member
     put 'update_multiple', to: 'subjects#update_multiple', on: :collection
   end

@@ -23,7 +23,7 @@
             <%= content_tag :p, 'Please respect the copyright.', class: 'text-muted small' %>
           <% end %>
 
-          <%= render 'edit_tags', subject: subject if can? :edit, subject%>
+          <%= render 'edit_tags', subject: subject if can?(:edit, subject) %>
         </div>
       </div>
     <% end %>

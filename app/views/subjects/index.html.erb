@@ -82,7 +82,7 @@
 
       <% end if current_user %>
 
-      <%= content_tag :div, id: "show-target", data: {spy: 'affix', 'offset-top': "60"} do %>
+      <%= content_tag :div, id: "show-target", data: {spy: 'affix', 'offset-top': "100", 'offset-bottom': '60'} do %>
         <%= render partial: 'subjects/slider', locals: { subject: @subjects.first }%>
       <% end if !browser.device.mobile? %>
     <% end %>

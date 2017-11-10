@@ -18,7 +18,7 @@ $(function () {
     $('#fileupload').fileupload({
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
-        url: '/subjects.json',
+        url: '/files.json',
         paramName: 'subject[file]',
         filesContainer: $('div.files'),
         uploadTemplateId: null,
