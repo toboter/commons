@@ -76,8 +76,8 @@
     <%= content_tag :div, class: 'clearfix' do %>
       <%= content_tag :div do %>
         <%= link_to fa_icon('upload', text: 'Upload'), new_subject_path, remote: true, class: 'btn btn-success', id: 'new-upload-button' if can_create? %>
-        <%= link_to fa_icon('share-alt', text: 'Sharing'),"#record-access-settings", class: 'btn btn-warning', id: 'record-sharing-button', data: {toggle: 'collapse'} if can_administrate? %>
-        <%= link_to fa_icon('edit', text: 'multiple'),"#edit-multiple-subjects", class: 'btn btn-warning', id: 'edit-multiple-button', data: {toggle: 'collapse'} if can_administrate? %>
+        <%= link_to fa_icon('share-alt', text: 'Sharing'),"#record-access-settings", class: 'btn btn-warning', id: 'record-sharing-button', data: {toggle: 'collapse'} if can_create?%>
+        <%= link_to fa_icon('edit', text: 'multiple'),"#edit-multiple-subjects", class: 'btn btn-warning', id: 'edit-multiple-button', data: {toggle: 'collapse'} if can_create? %>
         <hr>
 
       <% end if current_user %>

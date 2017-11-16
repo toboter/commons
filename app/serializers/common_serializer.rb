@@ -6,6 +6,11 @@ class CommonSerializer < ActiveModel::Serializer
   attributes :links
   attributes :file_copyright, :file_copyright_details
   attributes :files
+  attributes :full_entry
+
+  def full_entry
+    object.name
+  end
 
   def oid
     object.slug
