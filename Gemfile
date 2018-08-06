@@ -67,7 +67,7 @@ gem 'magnific-popup-rails', '~> 1.1.0'
 # gem 'rack-cors', :require => 'rack/cors'
 
 # Auth & Babili
-# gem 'marduk', path: '/home/tschmidt/dev/babylon/gem_dev/marduk'
+# gem 'marduk', path: '/home/tschmidt/dev/gem_dev/marduk'
 gem 'marduk', git: 'https://github.com/toboter/marduk.git'
 
 # Record Sharing
